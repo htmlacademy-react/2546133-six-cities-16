@@ -14,7 +14,7 @@ export function App() {
       <Routes>
         <Route index element={<Main offerCount = {2}/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/favorites' element={<Private userId = {false}> <Favorites/> </Private>}/>
+        <Route path='/favorites' element={<Private userId = {null}> <Favorites/> </Private>}/>
         <Route path='/offer/:id' element={<Offer/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>

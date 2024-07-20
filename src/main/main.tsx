@@ -1,7 +1,7 @@
 
 import '../../markup/css/main.css';
 import { Card } from '../card/card';
-export const Main = ({offerCount}:number) => (
+export const Main = (offerCount:number) => (
   <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
