@@ -1,11 +1,11 @@
 import { Navigate } from 'react-router-dom';
-
+import { ReactNode } from 'react';
 type PrivateProps = {
     userId: string | null;
-    children: JSX.Element;
+    children: ReactNode;
 }
 
-export const Private = ({userId, children}:PrivateProps):JSX.Element => {
+export const Private = ({userId, children}:PrivateProps):ReactNode => {
   if (userId) {
     return children;
   } else {
