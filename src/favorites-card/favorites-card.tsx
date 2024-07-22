@@ -1,14 +1,17 @@
 import { offerMockPropsType } from '../ts_types';
 import { Link } from 'react-router-dom';
 
-export const Card = ({offerMock}:offerMockPropsType) => (
-  <article className="cities__card place-card">
-    <div className="cities__image-wrapper place-card__image-wrapper">
+export const FavoritesCard = ({offerMock}:offerMockPropsType) => (
+  <article className="favorites__card place-card">
+    <div className="place-card__mark">
+      <span>{offerMock.premium}</span>
+    </div>
+    <div className="favorites__image-wrapper place-card__image-wrapper">
       <a href="#">
-        <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image"/>
+        <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image"/>
       </a>
     </div>
-    <div className="place-card__info">
+    <div className="favorites__card-info place-card__info">
       <div className="place-card__price-wrapper">
         <div className="place-card__price">
           <b className="place-card__price-value">&euro;{offerMock.cost}</b>
@@ -23,7 +26,7 @@ export const Card = ({offerMock}:offerMockPropsType) => (
       </div>
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
-          <span style={{width: '80%'}}></span>
+          <span style={{width: '100%'}}></span>
           <span className="visually-hidden">{offerMock.rating}</span>
         </div>
       </div>

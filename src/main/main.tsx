@@ -1,11 +1,12 @@
 
 import '../../markup/css/main.css';
-import { Card } from '../card/card';
-
+import { offerType } from '../mocks/offers';
+import { OfferList } from '../offer-list/offer-list';
 type MainProps = {
   offerCount:number;
+  offersMock: offerType[];
 }
-export const Main = ({offerCount}:MainProps) => (
+export const Main = ({offerCount, offersMock}:MainProps) => (
   <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
@@ -75,7 +76,7 @@ export const Main = ({offerCount}:MainProps) => (
         </section>
       </div>
       <div className="cities">
-        <div className="cities__places-container container">
+        <div className="citiesoffersMockPropsType__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{offerCount} places to stay in Amsterdam</b>
@@ -95,10 +96,7 @@ export const Main = ({offerCount}:MainProps) => (
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <Card/>
-              <Card/>
-              <Card/>
-              <Card/>
+              <OfferList offersMock={offersMock}/>
             </div>
           </section>
           <div className="cities__right-section">
