@@ -7,7 +7,6 @@ import { Private } from './private-route';
 import { offerType } from './mocks/offers';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
-
 type offersMockPropsType = {
   offersMock:Array<offerType>;
 }
