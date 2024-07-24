@@ -22,6 +22,8 @@ export type offerType = {
     itemList: itemType[];
     landLord: landLordType;
     reviews: reviewType;
+    lat: number;
+    lng: number;
 
 }
 
@@ -59,7 +61,9 @@ export const offersMock:Array<offerType> = [{
     reviewDate: 'April 2019',
     reviewText: 'Testreview'
 
-  }
+  },
+  lat: 52.3909553943508,
+  lng: 4.85309666406198
 
 },
 {
@@ -88,7 +92,11 @@ export const offersMock:Array<offerType> = [{
     reviewDate: 'July 2024',
     reviewText: 'very nice'
 
-  }},
+  },
+  lat: 52.3609553943508,
+  lng: 4.85309666406198
+
+},
 {
   key: 3,
   thumbnail:'img/apartment-01.jpg',
@@ -115,7 +123,10 @@ export const offersMock:Array<offerType> = [{
     reviewDate: 'April 2019',
     reviewText: 'Testreview'
 
-  }},
+  },
+  lat: 52.3909553943508,
+  lng: 4.929309666406198
+},
 {
   key: 4,
   thumbnail:'img/room.jpg',
@@ -142,6 +153,8 @@ export const offersMock:Array<offerType> = [{
     reviewDate: 'April 2019',
     reviewText: 'Testreview'
 
-  }
+  },
+  lat: 52.3809553943508,
+  lng: 4.939309666406198
 }
 ];

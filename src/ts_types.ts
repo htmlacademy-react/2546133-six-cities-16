@@ -7,3 +7,14 @@ export type offersMockPropsType = {
 export type offerMockPropsType = {
     offerMock: offerType;
 }
+
+export type cityType = {
+  title: string;
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
+export type mapRefType = {
+  current: HTMLDivElement;
+}
