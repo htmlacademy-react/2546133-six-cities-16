@@ -1,11 +1,40 @@
 import { useLocation } from 'react-router-dom';
 import { CommentForm } from '../comment-form/comment-form';
 import { offerType,itemType } from '../mocks/offers';
-
+import { ReviewList } from '../review-list/review-list';
+import { MapComp } from '../map/map';
+import { crdType } from '../ts_types';
+import { offersMock } from '../mocks/offers';
 
 export const Offer = ()=> {
   const state = useLocation();
   const offerMock:offerType = state.state as offerType;
+  const offersNear = offersMock.slice(0);
+
+  console.log(offersNear, 'offersNear');
+  const crdNear:crdType[] = 
+  [
+    {
+        key: 1,
+        lat: 52.3909553943508,
+        lng: 4.85309666406198
+    },
+    {
+        key: 2,
+        lat: 52.3609553943508,
+        lng: 4.85309666406198
+    },
+    {
+        key: 3,
+        lat: 52.3909553943508,
+        lng: 4.929309666406198
+    },
+    {
+        key: 4,
+        lat: 52.3809553943508,
+        lng: 4.939309666406198
+    }
+]
   return(
     <div className="page">
       <header className="header">
@@ -130,35 +159,14 @@ export const Offer = ()=> {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
-                      </div>
-                      <span className="reviews__user-name">
-                        {offerMock.reviews.name}
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        {offerMock.reviews.reviewText}
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">{offerMock.reviews.reviewDate}</time>
-                    </div>
-                  </li>
-                </ul>
+                <ReviewList offerMock={offerMock}/>
                 <CommentForm/>
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <section className="map">
+            <MapComp crdList={crdNear}></MapComp>
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">

@@ -3,12 +3,20 @@ import '../../markup/css/main.css';
 import { offerType } from '../mocks/offers';
 import { OfferList } from '../offer-list/offer-list';
 import { MapComp } from '../map/map';
+import { crdType } from '../ts_types';
 
 type MainProps = {
   offerCount:number;
   offersMock: offerType[];
 }
-export const Main = ({offerCount, offersMock}:MainProps) => (
+export const Main = ({offerCount, offersMock}:MainProps) => {
+  const crdList = offersMock.map((offer) => { 
+    return { key: offer.key,
+             lat: offer.lat,
+             lng: offer.lng
+            }})
+  console.log(crdList, 'crdList');
+  return(
   <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
@@ -103,7 +111,7 @@ export const Main = ({offerCount, offersMock}:MainProps) => (
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <MapComp offersMock={offersMock}/>
+              <MapComp crdList={crdList}/>
 
             </section>
           </div>
@@ -112,3 +120,4 @@ export const Main = ({offerCount, offersMock}:MainProps) => (
     </main>
   </div>
 );
+  }
