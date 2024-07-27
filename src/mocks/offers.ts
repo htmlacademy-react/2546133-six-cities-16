@@ -21,7 +21,7 @@ export type offerType = {
     guestNum: number;
     itemList: itemType[];
     landLord: landLordType;
-    reviews: reviewType;
+    reviews: reviewType[];
     lat: number;
     lng: number;
 
@@ -54,7 +54,8 @@ export const offersMock:Array<offerType> = [{
     name: 'John Doe',
     isPro: true,
   },
-  reviews: {
+  reviews: [{
+    key:1,
     userPic: 'img/avatar-max.jpg',
     name:'Some Guy',
     reviewRating: 5,
@@ -62,6 +63,16 @@ export const offersMock:Array<offerType> = [{
     reviewText: 'Testreview'
 
   },
+  {
+    key:2,
+    userPic: 'img/avatar-max.jpg',
+    name:'Some Guy11',
+    reviewRating: 7,
+    reviewDate: 'April 2024',
+    reviewText: 'Testreview22'
+
+  }
+  ],
   lat: 52.3909553943508,
   lng: 4.85309666406198
 
@@ -85,14 +96,15 @@ export const offersMock:Array<offerType> = [{
     name: 'Jane Doe',
     isPro: false,
   },
-  reviews: {
+  reviews: [{
+    key: 1,
     userPic: 'img/avatar-max.jpg',
     name:'John Doe',
     reviewRating: 10,
     reviewDate: 'July 2024',
     reviewText: 'very nice'
 
-  },
+  }],
   lat: 52.3609553943508,
   lng: 4.85309666406198
 
@@ -116,14 +128,16 @@ export const offersMock:Array<offerType> = [{
     name: 'John Doe',
     isPro: true,
   },
-  reviews: {
-    userPic: 'img/avatar-max.jpg',
-    name:'John Doe',
-    reviewRating: 5,
-    reviewDate: 'April 2019',
-    reviewText: 'Testreview'
-
-  },
+  reviews: [
+    {
+      key: 1,
+      userPic: 'img/avatar-max.jpg',
+      name:'John Doe',
+      reviewRating: 5,
+      reviewDate: 'April 2019',
+      reviewText: 'Testreview'
+    }
+  ],
   lat: 52.3909553943508,
   lng: 4.929309666406198
 },
@@ -146,14 +160,15 @@ export const offersMock:Array<offerType> = [{
     name: 'John Doe',
     isPro: true,
   },
-  reviews: {
+  reviews: [{
+    key:1,
     userPic: 'img/avatar-max.jpg',
     name:'John Doe',
     reviewRating: 5,
     reviewDate: 'April 2019',
     reviewText: 'Testreview'
 
-  },
+  }],
   lat: 52.3809553943508,
   lng: 4.939309666406198
 }

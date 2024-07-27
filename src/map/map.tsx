@@ -1,11 +1,10 @@
 import {useRef, useEffect} from 'react';
 import leaflet from 'leaflet';
-import { offersMockPropsType} from '../ts_types';
-import { offerType } from '../mocks/offers';
 import { cityType } from '../ts_types';
 import { useState } from 'react';
 import { Map } from 'leaflet';
-export const MapComp = ({offersMock}:offersMockPropsType) => {
+import { mapPropsType, crdType } from '../ts_types';
+export const MapComp = ({crdList}:mapPropsType) => {
 
   const city:cityType = {
     title: 'Amsterdam',
@@ -39,11 +38,11 @@ export const MapComp = ({offersMock}:offersMockPropsType) => {
 
   useEffect(() => {
     if (map) {
-      offersMock.forEach((offer:offerType) => {
+      crdList.forEach((crd:crdType) => {
         leaflet
           .marker({
-            lat: offer.lat,
-            lng: offer.lng,
+            lat: crd.lat,
+            lng: crd.lng,
           }, {
             icon: defaultCustomIcon,
           })
