@@ -72,7 +72,7 @@ export const offersMock:Array<offerType> = [{
     reviewText: 'Testreview22'
 
   }
-],
+  ],
   lat: 52.3909553943508,
   lng: 4.85309666406198
 
@@ -130,14 +130,14 @@ export const offersMock:Array<offerType> = [{
   },
   reviews: [
     {
-    key: 1,
-    userPic: 'img/avatar-max.jpg',
-    name:'John Doe',
-    reviewRating: 5,
-    reviewDate: 'April 2019',
-    reviewText: 'Testreview'
+      key: 1,
+      userPic: 'img/avatar-max.jpg',
+      name:'John Doe',
+      reviewRating: 5,
+      reviewDate: 'April 2019',
+      reviewText: 'Testreview'
     }
-],
+  ],
   lat: 52.3909553943508,
   lng: 4.929309666406198
 },

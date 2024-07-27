@@ -1,7 +1,5 @@
 import {useRef, useEffect} from 'react';
 import leaflet from 'leaflet';
-import { offersMockPropsType} from '../ts_types';
-import { offerType } from '../mocks/offers';
 import { cityType } from '../ts_types';
 import { useState } from 'react';
 import { Map } from 'leaflet';

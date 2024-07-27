@@ -14,13 +14,13 @@ export type reviewPropsType = {
 }
 
 export type crdType = {
-  key: number
-  lat: number,
-  lng: number,
-} 
+  key: number;
+  lat: number;
+  lng: number;
+}
 
 export type mapPropsType = {
-  crdList: crdType[]
+  crdList: crdType[];
 }
 
 
