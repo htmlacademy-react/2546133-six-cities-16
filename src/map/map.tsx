@@ -1,80 +1,64 @@
 import {useRef, useEffect} from 'react';
-import leaflet from 'leaflet';
 import { cityType } from '../ts_types';
-import { useState } from 'react';
-import { Map } from 'leaflet';
-import { mapPropsType, crdType } from '../ts_types';
+import { mapPropsType } from '../ts_types';
+import { useSelector } from 'react-redux';
+import useMap from '../hooks/use-map';
+
+import L, {Icon} from 'leaflet';
+import { stateType } from '../reducer';
+
 export const MapComp = ({crdList}:mapPropsType) => {
 
-  const city:cityType = {
+
+  const currentCity = useSelector((state: stateType) => state.city);
+
+
+  const cities:cityType[] = [{
     title: 'Amsterdam',
     lat: 52.23,
     lng: 4.54,
     zoom: 10,
-  };
-
-  const mapRef = useRef<HTMLDivElement>(null);
-
-
-  const points = [
-    {
-      title: 'Саундвью',
-      lat: 52.3909553943508,
-      lng: 4.85309666406198,
-    }, {
-      title: 'Ферри Поинт',
-      lat: 52.3909553943508,
-      lng: 4.929309666406198,
-    }
+  },
+  {
+    title: 'Paris',
+    lat: 48.864716,
+    lng: 2.349014,
+    zoom: 10,
+  }
   ];
-  const defaultCustomIcon = leaflet.icon({
+
+
+  const currentCityCrd = cities.find((city) => {
+    if (city.title === currentCity) {
+      return true;
+    }
+  });
+  const defaultCustomIcon = new Icon({
     iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
   });
 
-  const [map, setMap] = useState<Map | null>(null);
-  const isRenderedRef = useRef(false);
+  const mapRef = useRef(null);
+  const map = useMap(mapRef);
 
   useEffect(() => {
-    if (map) {
-      crdList.forEach((crd:crdType) => {
-        leaflet
-          .marker({
-            lat: crd.lat,
-            lng: crd.lng,
-          }, {
-            icon: defaultCustomIcon,
-          })
-          .addTo(map);
-      });
-    }
-  }, [map, points]);
+    if (map && currentCityCrd) {
+      map.flyTo([ currentCityCrd.lat, currentCityCrd.lng ], currentCityCrd.zoom);
 
-  useEffect(() => {
-    //leaflet map
-    if (mapRef.current !== null && !isRenderedRef.current) {
-      const instance = leaflet.map(mapRef.current, {
-        center: {
-          lat: city.lat,
-          lng: city.lng,
-        },
-        zoom: city.zoom,
+      const markerLayer = L.layerGroup().addTo(map);
+      markerLayer.clearLayers();
+
+      crdList.forEach((crd) => {
+        const marker = L.marker([ crd.lat, crd.lng ]).setIcon(defaultCustomIcon);
+        marker.addTo(markerLayer);
       });
 
-      leaflet
-        .tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-          {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          },
-        )
-        .addTo(instance);
-
-      setMap(instance);
-      isRenderedRef.current = true;
+      return () => {
+        map.removeLayer(markerLayer);
+      };
     }
-  }, [mapRef, city]);
+  });
 
 
   return (

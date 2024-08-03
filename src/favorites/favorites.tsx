@@ -1,14 +1,10 @@
 import { offersMockPropsType } from '../ts_types';
 import { offerType } from '../mocks/offers';
 import { FavoritesCard } from '../favorites-card/favorites-card';
-export const Favorites = ({offersMock}:offersMockPropsType) => {
+export const Favorites = ({offerList}:offersMockPropsType) => {
 
   const citiesList = ['Amsterdam','Cologne'];
   return (
-
-  /*citiesList.map((city:string) => { return (offersMock.map((offerMock:offerType) => {
-    return  (offerMock.city == city)?<Card key={offerMock.key} offerMock={offerMock}/> :''
-  }))})*/
 
     <div className="page">
       <header className="header">
@@ -55,7 +51,7 @@ export const Favorites = ({offersMock}:offersMockPropsType) => {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {offersMock.map((offerMock:offerType) => ((offerMock.city === city) ? <FavoritesCard key={offerMock.key} offerMock={offerMock}/> : '')
+                    {offerList.map((offerMock:offerType) => ((offerMock.city === city) ? <FavoritesCard key={offerMock.key} offerMock={offerMock}/> : '')
                     )}
                   </div>
                 </li>

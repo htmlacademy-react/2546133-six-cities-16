@@ -19,7 +19,7 @@ export function App({offersMock}:offersMockPropsType) {
       <Routes>
         <Route index element={<Main offerCount = {2} offersMock = {offersMock}/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/favorites' element={<Private userId = {'aa'}> <Favorites offersMock={offersMock}/> </Private>}/>
+        <Route path='/favorites' element={<Private userId = {'aa'}> <Favorites offerList={offersMock}/> </Private>}/>
         <Route path='/offer/:id' element={<Offer/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>

@@ -171,7 +171,7 @@ export const Offer = ()=> {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList offersMock={offersNear}/>
+              <OfferList offerList={offersNear}/>
             </div>
           </section>
         </div>
