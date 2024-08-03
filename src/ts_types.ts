@@ -2,12 +2,21 @@ import { offerType } from './mocks/offers';
 import { reviewType } from './mocks/reviews';
 
 export type offersMockPropsType = {
-    offersMock:Array<offerType>;
+    offerList:Array<offerType>;
   }
 
 export type offerMockPropsType = {
     offerMock: offerType;
 }
+
+export type cityPropsType = {
+  city: string;
+}
+
+export type cityListPropsType = {
+  cityList: string[];
+}
+
 
 export type reviewPropsType = {
   review:reviewType;

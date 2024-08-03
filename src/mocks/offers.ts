@@ -80,7 +80,7 @@ export const offersMock:Array<offerType> = [{
 {
   key: 2,
   thumbnail:'img/room.jpg',
-  city: 'Amsterdam',
+  city: 'Paris',
   premium:false,
   cost: 25,
   header: 'TestHeader2',
@@ -105,14 +105,16 @@ export const offersMock:Array<offerType> = [{
     reviewText: 'very nice'
 
   }],
-  lat: 52.3609553943508,
-  lng: 4.85309666406198
+  /*lat: 52.3609553943508,
+  lng: 4.85309666406198*/
+  lat: 48.864716,
+  lng: 2.349014
 
 },
 {
   key: 3,
   thumbnail:'img/apartment-01.jpg',
-  city: 'Cologne',
+  city: 'Amsterdam',
   premium:true,
   cost: 20,
   header: 'Beautiful & luxurious studio at great location',
@@ -144,7 +146,7 @@ export const offersMock:Array<offerType> = [{
 {
   key: 4,
   thumbnail:'img/room.jpg',
-  city: 'Cologne',
+  city: 'Amsterdam',
   premium:true,
   cost: 20,
   header: 'Beautiful & luxurious studio at great location',

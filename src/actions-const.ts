@@ -1,0 +1,4 @@
+export const ACTION_CONST = {
+  CHANGE_CITY: 'CHANGE_CITY',
+  SET_OFFER_LIST: 'SET_OFFER_LIST'
+};

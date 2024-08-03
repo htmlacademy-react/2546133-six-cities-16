@@ -3,17 +3,38 @@ import '../../markup/css/main.css';
 import { offerType } from '../mocks/offers';
 import { OfferList } from '../offer-list/offer-list';
 import { MapComp } from '../map/map';
+import { CityList } from '../city-list/city-list';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { changeCityAction, setOfferList } from '../action';
+import { getOfferList } from '../utils';
+import { stateType } from '../reducer';
 
 type MainProps = {
   offerCount:number;
   offersMock: offerType[];
 }
 export const Main = ({offerCount, offersMock}:MainProps) => {
-  const crdList = offersMock.map((offer) => ({ key: offer.key,
+
+  const dispatch = useDispatch();
+  const currentCity = useSelector((state:stateType) =>state.city);
+  const currentOfferList = useSelector((state:stateType) => state.offerList);
+
+  const cityList = ['Paris','Cologne','Brussels','Amsterdam','Hamburg','Dusseldorf'];
+
+  //const offerList = offersMock.filter((offer) => {  if(currentCity === offer.city) {return offer}});
+
+  const crdList = currentOfferList.map((offer:offerType) => ({ key: offer.key,
     lat: offer.lat,
     lng: offer.lng
   }));
-
+  //eslint-disable-next-line
+  console.log(offerCount);
+  useEffect(() => {
+    dispatch(changeCityAction('Paris'));
+    dispatch(setOfferList(getOfferList(offersMock, 'Paris')));
+  }, []);
   return(
     <div className="page page--gray page--main">
       <header className="header">
@@ -49,45 +70,17 @@ export const Main = ({offerCount, offersMock}:MainProps) => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+
+            {<CityList cityList={cityList}></CityList>}
+
+
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offerCount} places to stay in Amsterdam</b>
+              <b className="places__found">{currentOfferList.length} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -104,7 +97,7 @@ export const Main = ({offerCount, offersMock}:MainProps) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferList offersMock={offersMock}/>
+                <OfferList offerList={currentOfferList}/>
               </div>
             </section>
             <div className="cities__right-section">
