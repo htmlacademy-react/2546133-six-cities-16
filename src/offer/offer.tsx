@@ -1,39 +1,45 @@
 import { useLocation } from 'react-router-dom';
 import { CommentForm } from '../comment-form/comment-form';
-import { offerType,itemType } from '../mocks/offers';
+import { OfferType } from '../ts_types';
 import { ReviewList } from '../review-list/review-list';
 import { MapComp } from '../map/map';
-import { crdType } from '../ts_types';
-import { offersMock } from '../mocks/offers';
+//import { CrdType } from '../ts_types';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchCurrentOffer, fetchOfferListNear } from '../action';
+import { useSelector } from 'react-redux';
+
 import { OfferList } from '../offer-list/offer-list';
+import { StateType } from '../reducer';
+import { getOfferList } from '../utils';
+import { Spiner } from '../spinner/spiner';
 export const Offer = ()=> {
   const state = useLocation();
-  const offerMock:offerType = state.state as offerType;
-  const offersNear = offersMock.filter((offer) => offerMock.key !== offer.key);
+  const dispatch = useDispatch();
+  const currentOfferId:string = state.state as string;
+  const currentOffer = useSelector((state: StateType) =>  state.currentOffer)
+  const currentCity = useSelector((state:StateType) =>state.city);
+  const currentOfferList = useSelector((state:StateType) => state.offerList);
+  const currentOfferListNear = useSelector((state:StateType) => state.offerListNear);
+  //const offersNear = offersMock.filter((offer) => currentOffer.id !== offer.key);
+  useEffect(() => {
+    console.log('usef');
+    dispatch(fetchCurrentOffer(currentOfferId));
+    console.log('useff');
+  }, []); 
+  
+  useEffect(() =>{
+    dispatch(fetchOfferListNear(currentOfferId));
+  }, [])
 
-  const crdNear:crdType[] =
-  [
-    {
-      key: 1,
-      lat: 52.3909553943508,
-      lng: 4.85309666406198
-    },
-    {
-      key: 2,
-      lat: 52.3609553943508,
-      lng: 4.85309666406198
-    },
-    {
-      key: 3,
-      lat: 52.3909553943508,
-      lng: 4.929309666406198
-    },
-    {
-      key: 4,
-      lat: 52.3809553943508,
-      lng: 4.939309666406198
-    }
-  ];
+  const crdNear = currentOfferListNear.map((offer:OfferType) => ({ id: offer.id,
+    latitude: offer.location.latitude,
+    longitude: offer.location.longitude
+  }));
+  if (!currentOffer) {
+    return (<Spiner/>)
+  }
+ 
   return(
     <div className="page">
       <header className="header">
@@ -92,11 +98,11 @@ export const Offer = ()=> {
           <div className="offer__container container">
             <div className="offer__wrapper">
               <div className="offer__mark">
-                <span>{offerMock.premium}</span>
+                <span>{currentOffer.isPremium}</span>
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {offerMock.header}
+                  {currentOffer.title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -110,29 +116,29 @@ export const Offer = ()=> {
                   <span style={{width: '80%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offerMock.rating}</span>
+                <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {offerMock.type}
+                  {currentOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offerMock.bedroomsNum} Bedrooms
+                  {currentOffer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offerMock.guestNum} adults
+                  Max {currentOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{offerMock.cost}</b>
+                <b className="offer__price-value">&euro;{currentOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offerMock.itemList.map((item:itemType) => (
-                    <li key={item.key} className="offer__inside-item">
-                      {item.item}
+                  {currentOffer.goods.map((good:string, index: number) => (
+                    <li key={index} className="offer__inside-item">
+                      {good}
                     </li>
                   ))}
                 </ul>
@@ -141,24 +147,24 @@ export const Offer = ()=> {
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                    <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
-                    {offerMock.landLord.name}
+                    {currentOffer.host.name}
                   </span>
                   <span className="offer__user-status">
-                    {offerMock.landLord.isPro}
+                    {currentOffer.host.isPro}
                   </span>
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    {offerMock.description}
+                    {currentOffer.description}
                   </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ReviewList offerMock={offerMock}/>
+                <ReviewList/>
                 <CommentForm/>
               </section>
             </div>
@@ -171,7 +177,7 @@ export const Offer = ()=> {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList offerList={offersNear}/>
+              <OfferList offerList ={currentOfferListNear}/>
             </div>
           </section>
         </div>

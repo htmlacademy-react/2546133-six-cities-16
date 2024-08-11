@@ -1,40 +1,53 @@
 
 import '../../markup/css/main.css';
-import { offerType } from '../mocks/offers';
+import { OfferType } from '../ts_types';
 import { OfferList } from '../offer-list/offer-list';
 import { MapComp } from '../map/map';
 import { CityList } from '../city-list/city-list';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeCityAction, setOfferList } from '../action';
+import { changeCityAction, fetchOfferList } from '../action';
+import { StateType } from '../reducer';
 import { getOfferList } from '../utils';
-import { stateType } from '../reducer';
-
+import { Spiner } from '../spinner/spiner';
+import { Link } from 'react-router-dom';
+import { CITY_LIST } from '../const';
+/*
 type MainProps = {
   offerCount:number;
   offersMock: offerType[];
-}
-export const Main = ({offerCount, offersMock}:MainProps) => {
+}*/
+export const Main = () => {
 
   const dispatch = useDispatch();
-  const currentCity = useSelector((state:stateType) =>state.city);
-  const currentOfferList = useSelector((state:stateType) => state.offerList);
-
-  const cityList = ['Paris','Cologne','Brussels','Amsterdam','Hamburg','Dusseldorf'];
+  const currentCity = useSelector((state:StateType) =>state.city);
+  const currentOfferList = useSelector((state:StateType) => state.offerList);
+  const isLoading = useSelector((state:StateType) => state.isLoading);
+  const authorizationStatus = useSelector((state:StateType) => state.authorizationStatus);
+  const authorizationData = useSelector((state:StateType) => state.authorizationData);
+   
 
   //const offerList = offersMock.filter((offer) => {  if(currentCity === offer.city) {return offer}});
 
-  const crdList = currentOfferList.map((offer:offerType) => ({ key: offer.key,
-    lat: offer.lat,
-    lng: offer.lng
+  const crdList = getOfferList(currentOfferList,currentCity).map((offer:OfferType) => ({ id: offer.id,
+    latitude: offer.location.latitude,
+    longitude: offer.location.longitude
   }));
   //eslint-disable-next-line
-  console.log(offerCount);
+   
+   
   useEffect(() => {
+    dispatch(fetchOfferList());
+   
     dispatch(changeCityAction('Paris'));
-    dispatch(setOfferList(getOfferList(offersMock, 'Paris')));
+    //dispatch(setOfferList(getOfferList(offersMock, 'Paris')));
   }, []);
+
+
+  if (isLoading) {
+    return (<Spiner/>)
+    }
   return(
     <div className="page page--gray page--main">
       <header className="header">
@@ -46,12 +59,13 @@ export const Main = ({offerCount, offersMock}:MainProps) => {
               </a>
             </div>
             <nav className="header__nav">
+              {authorizationStatus?
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <a className="header__nav-link header__nav-link--profile" href="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{authorizationData?.email}</span>
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
@@ -60,7 +74,8 @@ export const Main = ({offerCount, offersMock}:MainProps) => {
                     <span className="header__signout">Sign out</span>
                   </a>
                 </li>
-              </ul>
+              </ul>:
+              <Link to={`/login`}> Sign in</Link>}
             </nav>
           </div>
         </div>
@@ -71,7 +86,7 @@ export const Main = ({offerCount, offersMock}:MainProps) => {
         <div className="tabs">
           <section className="locations container">
 
-            {<CityList cityList={cityList}></CityList>}
+            {<CityList cityList={CITY_LIST}></CityList>}
 
 
           </section>
@@ -97,7 +112,7 @@ export const Main = ({offerCount, offersMock}:MainProps) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferList offerList={currentOfferList}/>
+                <OfferList offerList= {getOfferList(currentOfferList, currentCity)}/>
               </div>
             </section>
             <div className="cities__right-section">

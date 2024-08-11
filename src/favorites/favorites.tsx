@@ -1,9 +1,19 @@
-import { offersMockPropsType } from '../ts_types';
-import { offerType } from '../mocks/offers';
+ 
 import { FavoritesCard } from '../favorites-card/favorites-card';
-export const Favorites = ({offerList}:offersMockPropsType) => {
-
-  const citiesList = ['Amsterdam','Cologne'];
+import { fetchFavorites, setFavorites } from '../action';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { StateType } from '../reducer';
+import { OfferType } from '../ts_types';
+import { CITY_LIST } from '../const';
+export const Favorites = () => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state:StateType) => state.favorites);
+  
+  useEffect(()=>{
+    dispatch(fetchFavorites());
+  }, []) 
   return (
 
     <div className="page">
@@ -41,7 +51,7 @@ export const Favorites = ({offerList}:offersMockPropsType) => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {citiesList.map((city:string) => (
+              {CITY_LIST.map((city:string) => (
                 <li key={city} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
@@ -51,8 +61,8 @@ export const Favorites = ({offerList}:offersMockPropsType) => {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {offerList.map((offerMock:offerType) => ((offerMock.city === city) ? <FavoritesCard key={offerMock.key} offerMock={offerMock}/> : '')
-                    )}
+                      {favorites.map((offer:OfferType) => ((offer.city.name === city) ? <FavoritesCard key={offer.id} offer={offer}/> : '') 
+                    ) }
                   </div>
                 </li>
               )
