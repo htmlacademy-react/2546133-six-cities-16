@@ -13,6 +13,7 @@ import { getOfferList } from '../utils';
 import { Spiner } from '../spinner/spiner';
 import { Link } from 'react-router-dom';
 import { CITY_LIST } from '../const';
+import { DispatchType } from '../ts_types';
 /*
 type MainProps = {
   offerCount:number;
@@ -20,14 +21,15 @@ type MainProps = {
 }*/
 export const Main = () => {
 
-  const dispatch = useDispatch();
+  const useAppDispatch = () => useDispatch<DispatchType>();
+  const dispatch = useAppDispatch();
   const currentCity = useSelector((state:StateType) =>state.city);
   const currentOfferList = useSelector((state:StateType) => state.offerList);
   const isLoading = useSelector((state:StateType) => state.isLoading);
   const authorizationStatus = useSelector((state:StateType) => state.authorizationStatus);
   const authorizationData = useSelector((state:StateType) => state.authorizationData);
-   
 
+  console.log('auth', authorizationData, authorizationStatus);
   //const offerList = offersMock.filter((offer) => {  if(currentCity === offer.city) {return offer}});
 
   const crdList = getOfferList(currentOfferList,currentCity).map((offer:OfferType) => ({ id: offer.id,
@@ -36,18 +38,18 @@ export const Main = () => {
   }));
   //eslint-disable-next-line
    
-   
+
   useEffect(() => {
     dispatch(fetchOfferList());
-   
+
     dispatch(changeCityAction('Paris'));
     //dispatch(setOfferList(getOfferList(offersMock, 'Paris')));
   }, []);
 
 
   if (isLoading) {
-    return (<Spiner/>)
-    }
+    return (<Spiner/>);
+  }
   return(
     <div className="page page--gray page--main">
       <header className="header">
@@ -59,23 +61,25 @@ export const Main = () => {
               </a>
             </div>
             <nav className="header__nav">
-              {authorizationStatus?
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">{authorizationData?.email}</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>:
-              <Link to={`/login`}> Sign in</Link>}
+              {authorizationStatus ?
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <a className="header__nav-link header__nav-link--profile" href="#">
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__user-name user__name">
+                        <Link to={'/favorites'}> {authorizationStatus ? authorizationData?.email : ''}</Link>
+                      </span>
+                      <span className="header__favorite-count">3</span>
+                    </a>
+                  </li>
+                  <li className="header__nav-item">
+                    <a className="header__nav-link" href="#">
+                      <span className="header__signout">Sign out</span>
+                    </a>
+                  </li>
+                </ul> :
+                <Link to={'/login'}> Sign in</Link>}
             </nav>
           </div>
         </div>

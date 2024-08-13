@@ -7,9 +7,9 @@ type PrivateProps = {
 }
 
 export const Private = ({children}:PrivateProps):ReactNode => {
-  const authorizationStatus = useSelector((state: StateType) => {state.authorizationStatus})
- 
-   
+  const authorizationStatus = useSelector((state: StateType) => state.authorizationStatus);
+
+
   if (authorizationStatus === 'Authorized') {
     return children;
   } else {

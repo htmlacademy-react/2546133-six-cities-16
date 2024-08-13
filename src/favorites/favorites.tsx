@@ -1,19 +1,21 @@
- 
+
 import { FavoritesCard } from '../favorites-card/favorites-card';
-import { fetchFavorites, setFavorites } from '../action';
+import { fetchFavorites} from '../action';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { StateType } from '../reducer';
 import { OfferType } from '../ts_types';
 import { CITY_LIST } from '../const';
+import { DispatchType } from '../ts_types';
 export const Favorites = () => {
-  const dispatch = useDispatch();
+  const useAppDispatch = () => useDispatch<DispatchType>();
+  const dispatch = useAppDispatch();
   const favorites = useSelector((state:StateType) => state.favorites);
-  
+
   useEffect(()=>{
     dispatch(fetchFavorites());
-  }, []) 
+  }, []);
   return (
 
     <div className="page">
@@ -61,7 +63,7 @@ export const Favorites = () => {
                     </div>
                   </div>
                   <div className="favorites__places">
-                      {favorites.map((offer:OfferType) => ((offer.city.name === city) ? <FavoritesCard key={offer.id} offer={offer}/> : '') 
+                    {favorites.map((offer:OfferType) => ((offer.city.name === city) ? <FavoritesCard key={offer.id} offer={offer}/> : '')
                     ) }
                   </div>
                 </li>

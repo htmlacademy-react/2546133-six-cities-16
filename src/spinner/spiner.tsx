@@ -1,8 +1,6 @@
-import './spiner.css'
+import './spiner.css';
 
-export const Spiner =() => {
-    return(
-    <div>
+export const Spiner = () => (
+  <div>
         loading
-    </div>)
-}
+  </div>);

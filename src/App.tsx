@@ -8,6 +8,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from './action';
+import { DispatchType } from './ts_types';
 
 /*type offersMockPropsType = {
   offersMock:Array<offerType>;
@@ -15,7 +16,8 @@ import { login } from './action';
 
 export function App() {
 
-  const dispatch = useDispatch();
+  const useAppDispatch = () => useDispatch<DispatchType>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(login());
@@ -26,9 +28,9 @@ export function App() {
     /*<Main offerCount = {2}/>*/
     <BrowserRouter>
       <Routes>
-        <Route index element={<Main/>}/> 
+        <Route index element={<Main/>}/>
         <Route path='/login' element={<Login/>}/>
-        {<Route path='/favorites' element={<Private> <Favorites offerList={offersMock}/> </Private>}/>}
+        {<Route path='/favorites' element={<Private> <Favorites/> </Private>}/>}
         <Route path='/offer/:id' element={<Offer/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>

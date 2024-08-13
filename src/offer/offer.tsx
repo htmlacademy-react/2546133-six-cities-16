@@ -11,35 +11,34 @@ import { useSelector } from 'react-redux';
 
 import { OfferList } from '../offer-list/offer-list';
 import { StateType } from '../reducer';
-import { getOfferList } from '../utils';
 import { Spiner } from '../spinner/spiner';
+import { DispatchType } from '../ts_types';
+
 export const Offer = ()=> {
   const state = useLocation();
-  const dispatch = useDispatch();
-  const currentOfferId:string = state.state as string;
-  const currentOffer = useSelector((state: StateType) =>  state.currentOffer)
-  const currentCity = useSelector((state:StateType) =>state.city);
-  const currentOfferList = useSelector((state:StateType) => state.offerList);
+  const useAppDispatch = () => useDispatch<DispatchType>();
+  const dispatch = useAppDispatch();
+  const currentOfferId = state.state as string;
+  const currentOffer = useSelector((state: StateType) => state.currentOffer);
   const currentOfferListNear = useSelector((state:StateType) => state.offerListNear);
   //const offersNear = offersMock.filter((offer) => currentOffer.id !== offer.key);
   useEffect(() => {
-    console.log('usef');
+    //read documentation
     dispatch(fetchCurrentOffer(currentOfferId));
-    console.log('useff');
-  }, []); 
-  
+  }, []);
+
   useEffect(() =>{
     dispatch(fetchOfferListNear(currentOfferId));
-  }, [])
+  }, []);
 
   const crdNear = currentOfferListNear.map((offer:OfferType) => ({ id: offer.id,
     latitude: offer.location.latitude,
     longitude: offer.location.longitude
   }));
   if (!currentOffer) {
-    return (<Spiner/>)
+    return (<Spiner/>);
   }
- 
+
   return(
     <div className="page">
       <header className="header">

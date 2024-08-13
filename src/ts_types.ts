@@ -1,5 +1,5 @@
 import { store } from './store';
- 
+
 export type cityPropsType = {
   city: string;
 }
@@ -20,29 +20,29 @@ export type CrdType = {
 }
 
 export type HostType = {
-  name: string,
-  avatarUrl: string,
-  isPro: boolean
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
 }
 export type OfferDType = {
-   
-    "id": string,
-    "title": string,
-    "type": string,
-    "price": number,
-    "city": CityType,
-    "location": LocationType
-    "isFavorite": boolean,
-    "isPremium": boolean,
-    "rating": number,
-    "description": string,
-    "bedrooms": number,
-    "goods": string[],
-    "host": HostType,
-    "images": string[],
-    "maxAdults": number
+
+    'id': string;
+    'title': string;
+    'type': string;
+    'price': number;
+    'city': CityType;
+    'location': LocationType;
+    'isFavorite': boolean;
+    'isPremium': boolean;
+    'rating': number;
+    'description': string;
+    'bedrooms': number;
+    'goods': string[];
+    'host': HostType;
+    'images': string[];
+    'maxAdults': number;
     }
- 
+
 export type reviewType = {
   key: number;
   userPic: string;
@@ -66,13 +66,13 @@ export type MapPropsType = {
 export type LocationType = {
   latitude: number;
   longitude: number;
-  zoom: number
+  zoom: number;
 
 }
- 
+
 export type CityType = {
   name: string;
-  location: LocationType
+  location: LocationType;
 }
 
 
@@ -81,6 +81,10 @@ export type ItemType = {
   item: string;
 }
 
+export type LoginObjType = {
+  email: string;
+  password: string;
+}
 
 export type OfferType = {
   id: string;
@@ -92,17 +96,17 @@ export type OfferType = {
   location: LocationType;
   isFavorite: boolean;
   isPremium: boolean;
-  rating: number
+  rating: number;
 }
- 
+
 export type AuthDateType = {
-  name: string,
-  avatarUrl: string,
+  name: string;
+  avatarUrl: string;
   isPro: boolean;
-  email: string,
-  token: string
+  email: string;
+  token: string;
 }
- 
+
 
 export type OfferListPropType = {
   offerList:Array<OfferType>;

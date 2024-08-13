@@ -14,7 +14,6 @@ function useMap(
 
 
   const currentCity = useSelector((state:StateType) => state.city);
-   
 
 
   const currentCityCrd = CITIES.find((city) => {

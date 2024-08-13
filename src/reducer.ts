@@ -9,7 +9,7 @@ export type StateType = {
   offerListNear: OfferType[];
   authorizationStatus: string | null;
   authorizationData: AuthDateType | null;
-  favorites:  OfferType[]
+  favorites: OfferType[];
 };
 
 export const INITIAL_STATE:StateType = {

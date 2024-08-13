@@ -1,4 +1,4 @@
- 
+
 import { Link } from 'react-router-dom';
 import { OfferPropType } from '../ts_types';
 

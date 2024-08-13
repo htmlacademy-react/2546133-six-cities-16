@@ -1,12 +1,10 @@
 
-const TOKEN:string = 'T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=';
-
-const TOKEN_NAME: string ='auth_token';
-
-console.log(TOKEN);
+ 
+const TOKEN_NAME: string = 'auth_token';
+ 
 export const getToken = (): string => {
   const token = localStorage.getItem(TOKEN_NAME);
-  return token?token:""
+  return token ? token : '';
 };
 
 export const setToken = (token: string) => {
