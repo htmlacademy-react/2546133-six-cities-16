@@ -7,7 +7,7 @@ export const OfferList = ({offerList}:OfferListPropType) => {
   const [activeOffer, setActiveOffer] = useState('');
 
   //eslint-disable-next-line
-
+  console.log('activeOffer');
   const hoverOnHandler = (id:string) => {
     setActiveOffer(id);
   };
