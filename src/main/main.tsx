@@ -4,9 +4,8 @@ import { OfferType } from '../ts_types';
 import { OfferList } from '../offer-list/offer-list';
 import { MapComp } from '../map/map';
 import { CityList } from '../city-list/city-list';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { changeCityAction, fetchOfferList } from '../action';
 import { StateType } from '../reducer';
 import { getOfferList } from '../utils';
@@ -14,11 +13,7 @@ import { Spiner } from '../spinner/spiner';
 import { Link } from 'react-router-dom';
 import { CITY_LIST } from '../const';
 import { DispatchType } from '../ts_types';
-/*
-type MainProps = {
-  offerCount:number;
-  offersMock: offerType[];
-}*/
+
 export const Main = () => {
 
   const useAppDispatch = () => useDispatch<DispatchType>();
