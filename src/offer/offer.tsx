@@ -15,21 +15,19 @@ import { Spiner } from '../spinner/spiner';
 import { DispatchType } from '../ts_types';
 
 export const Offer = ()=> {
-  const state = useLocation();
+  const stateLocation = useLocation();
   const useAppDispatch = () => useDispatch<DispatchType>();
   const dispatch = useAppDispatch();
-  const currentOfferId = state.state as string;
+  const currentOfferId = stateLocation.state as string;
   const currentOffer = useSelector((state: StateType) => state.currentOffer);
   const currentOfferListNear = useSelector((state:StateType) => state.offerListNear);
   //const offersNear = offersMock.filter((offer) => currentOffer.id !== offer.key);
   useEffect(() => {
     //read documentation
     dispatch(fetchCurrentOffer(currentOfferId));
-  }, []);
-
-  useEffect(() =>{
     dispatch(fetchOfferListNear(currentOfferId));
   }, []);
+
 
   const crdNear = currentOfferListNear.map((offer:OfferType) => ({ id: offer.id,
     latitude: offer.location.latitude,
@@ -135,8 +133,8 @@ export const Offer = ()=> {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {currentOffer.goods.map((good:string, index: number) => (
-                    <li key={index} className="offer__inside-item">
+                  {currentOffer.goods.map((good:string) => (
+                    <li key={good} className="offer__inside-item">
                       {good}
                     </li>
                   ))}

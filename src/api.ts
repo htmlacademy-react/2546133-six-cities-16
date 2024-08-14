@@ -25,13 +25,7 @@ export const configureAxios = () => {
   );
   api.interceptors.response.use(
     (response) => response,
-    (error) => {
-      if (error.response.status === 401) {
-
-      }
-
-      return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
   );
   return api;
 };

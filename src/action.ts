@@ -1,7 +1,7 @@
 import { OfferType } from './ts_types';
 import { ACTION_CONST } from './actions-const';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { DispatchType, StateType, AuthDateType, LoginObjType } from './ts_types';
+import { DispatchType, StateType, AuthDataType, LoginObjType } from './ts_types';
 import { AxiosInstance } from 'axios';
 import { routesAPI } from './const';
 
@@ -17,7 +17,7 @@ export const setOfferListNear = (offerListNear:OfferType[]) => ({type: ACTION_CO
 
 export const setAuthStatus = (authorizationStatus:string) => ({type: ACTION_CONST.SET_AUTHORIZATION_STATUS,authorizationStatus: authorizationStatus });
 
-export const setAuthData = (authorizationData:AuthDateType) => ({type: ACTION_CONST.SET_AUTHORIZATION_DATA, authorizationData: authorizationData });
+export const setAuthData = (authorizationData:AuthDataType) => ({type: ACTION_CONST.SET_AUTHORIZATION_DATA, authorizationData: authorizationData });
 
 export const setFavorites = (favorites:OfferType[]) => ({type: ACTION_CONST.SET_FAVORITES, favorites: favorites});
 
@@ -29,7 +29,7 @@ export const fetchOfferList = createAsyncThunk<void, undefined, {
   '/data/offers',
   async (_args, {dispatch, extra: objApi}) => {
     dispatch(setIsLoading(true));
-    const { data } = await objApi.get(routesAPI.offers);
+    const { data } = await objApi.get<OfferType[]>(routesAPI.offers);
     dispatch(setIsLoading(false));
     dispatch(setOfferList(data));
   }
@@ -43,7 +43,7 @@ export const fetchCurrentOffer = createAsyncThunk<void, string, {
 }>(
   '/data/offer',
   async(currentOfferId, {dispatch, extra: objApi}) => {
-    const {data} = await objApi.get(`${routesAPI.offers}/${currentOfferId}`);
+    const {data} = await objApi.get<OfferType>(`${routesAPI.offers}/${currentOfferId}`);
     dispatch(setCurrentOffer(data));
   });
 
@@ -55,7 +55,7 @@ export const fetchOfferListNear = createAsyncThunk<void, string, {
 }>(
   '/data/offers_near',
   async(_args, {dispatch, extra: objApi}) => {
-    const {data} = await objApi.get(`${routesAPI.offers}/${_args}/nearby`);
+    const {data} = await objApi.get<OfferType[]>(`${routesAPI.offers}/${_args}/nearby`);
     dispatch(setOfferListNear(data));
   });
 
@@ -66,7 +66,7 @@ export const login = createAsyncThunk<void, undefined, {
 }>(
   '/auth/login',
   async(_args, {dispatch, extra: objApi}) => {
-    let {data} = await objApi.get(routesAPI.login);
+    let {data} = await objApi.get<string>(routesAPI.login);
     if(!data) {
       data = 'Unauthorized';
     }
@@ -81,7 +81,7 @@ export const loginPost = createAsyncThunk<void, LoginObjType, {
       '/auth/login_post',
       async(_args, {dispatch, extra: objApi}) => {
         let status:string;
-        const {data} = await objApi.post(routesAPI.login, _args);
+        const {data} = await objApi.post<AuthDataType>(routesAPI.login, _args);
         if(!data) {
           status = 'Unauthorized';
         } else {
@@ -99,7 +99,7 @@ export const fetchFavorites = createAsyncThunk<void, undefined, {
         }>(
           '/data/favorites',
           async(_args, {dispatch, extra: objApi}) => {
-            const {data} = await objApi.get(routesAPI.favorites);
+            const {data} = await objApi.get<OfferType[]>(routesAPI.favorites);
             dispatch(setFavorites(data));
 
           });

@@ -1,7 +1,7 @@
 
- 
+
 const TOKEN_NAME: string = 'auth_token';
- 
+
 export const getToken = (): string => {
   const token = localStorage.getItem(TOKEN_NAME);
   return token ? token : '';

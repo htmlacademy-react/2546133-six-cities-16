@@ -1,5 +1,5 @@
 import { ACTION_CONST } from './actions-const';
-import { OfferType, OfferDType, AuthDateType } from './ts_types';
+import { OfferType, OfferDType, AuthDataType } from './ts_types';
 
 export type StateType = {
   city: string | null;
@@ -8,7 +8,7 @@ export type StateType = {
   currentOffer: OfferDType | null;
   offerListNear: OfferType[];
   authorizationStatus: string | null;
-  authorizationData: AuthDateType | null;
+  authorizationData: AuthDataType | null;
   favorites: OfferType[];
 };
 
@@ -43,7 +43,7 @@ type ActionType =
   currentOffer: OfferDType;
   offerListNear: OfferType[];
   authorizationStatus: string | null;
-  authorizationData: AuthDateType | null;
+  authorizationData: AuthDataType | null;
   favorites: OfferType[];
 }
 

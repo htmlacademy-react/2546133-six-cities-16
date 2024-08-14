@@ -29,8 +29,6 @@ export const Main = () => {
   const authorizationStatus = useSelector((state:StateType) => state.authorizationStatus);
   const authorizationData = useSelector((state:StateType) => state.authorizationData);
 
-  console.log('auth', authorizationData, authorizationStatus);
-  //const offerList = offersMock.filter((offer) => {  if(currentCity === offer.city) {return offer}});
 
   const crdList = getOfferList(currentOfferList,currentCity).map((offer:OfferType) => ({ id: offer.id,
     latitude: offer.location.latitude,

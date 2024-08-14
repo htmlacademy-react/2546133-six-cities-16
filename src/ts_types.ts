@@ -98,8 +98,23 @@ export type OfferType = {
   isPremium: boolean;
   rating: number;
 }
+export type commentStateType = {
+  rating: number;
+  review: string;
+}
+export type commentRatingType = {
+  value: number;
+}
+export type commentReviewType = {
+  value: string;
+}
 
-export type AuthDateType = {
+export type evtReviewType = {
+  rating:commentRatingType;
+  review:commentReviewType;
+}
+
+export type AuthDataType = {
   name: string;
   avatarUrl: string;
   isPro: boolean;

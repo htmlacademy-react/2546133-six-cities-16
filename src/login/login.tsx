@@ -1,23 +1,26 @@
 import { loginPost } from '../action';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { DispatchType } from '../ts_types';
+import { DispatchType} from '../ts_types';
+import { useRef } from 'react';
 
 export const Login = () => {
 
   const useAppDispatch = () => useDispatch<DispatchType>();
   const dispatch = useAppDispatch();
+  const inputEmail = useRef<HTMLInputElement | null>(null);
+  const inputPassword = useRef<HTMLInputElement | null>(null);
+
   const handleFormSubmit = (evt:React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    console.log(evt.currentTarget.email.value, 'evtcurrenttarget');
-    const loginObj =
-    {
-      email: evt.currentTarget.email.value,
-      password: evt.currentTarget.password.value
-    };
-    dispatch(loginPost(loginObj));
-
+    if (inputEmail.current && inputPassword.current) {
+      dispatch(loginPost({
+        email: inputEmail.current.value,
+        password: inputPassword.current.value
+      }));
+    }
   };
+
 
   return(
     <div className="page page--gray page--login">
@@ -43,11 +46,11 @@ export const Login = () => {
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required/>
+                <input className="login__input form__input" type="email" name="email" placeholder="Email" required ref ={inputEmail}/>
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required/>
+                <input className="login__input form__input" type="password" name="password" placeholder="Password" required ref ={inputPassword}/>
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
