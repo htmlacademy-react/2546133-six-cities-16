@@ -1,35 +1,19 @@
 import {useRef, useEffect} from 'react';
-import { cityType } from '../ts_types';
-import { mapPropsType } from '../ts_types';
+import { CITIES } from '../const';
+import { MapPropsType } from '../ts_types';
 import { useSelector } from 'react-redux';
 import useMap from '../hooks/use-map';
 
 import L, {Icon} from 'leaflet';
-import { stateType } from '../reducer';
+import { StateType } from '../reducer';
 
-export const MapComp = ({crdList}:mapPropsType) => {
-
-
-  const currentCity = useSelector((state: stateType) => state.city);
+export const MapComp = ({crdList}:MapPropsType) => {
 
 
-  const cities:cityType[] = [{
-    title: 'Amsterdam',
-    lat: 52.23,
-    lng: 4.54,
-    zoom: 10,
-  },
-  {
-    title: 'Paris',
-    lat: 48.864716,
-    lng: 2.349014,
-    zoom: 10,
-  }
-  ];
+  const currentCity = useSelector((state: StateType) => state.city);
 
-
-  const currentCityCrd = cities.find((city) => {
-    if (city.title === currentCity) {
+  const currentCityCrd = CITIES.find((city) => {
+    if (city.name === currentCity) {
       return true;
     }
   });
@@ -44,13 +28,13 @@ export const MapComp = ({crdList}:mapPropsType) => {
 
   useEffect(() => {
     if (map && currentCityCrd) {
-      map.flyTo([ currentCityCrd.lat, currentCityCrd.lng ], currentCityCrd.zoom);
+      map.flyTo([ currentCityCrd.location.latitude, currentCityCrd.location.longitude ], currentCityCrd.location.zoom);
 
       const markerLayer = L.layerGroup().addTo(map);
       markerLayer.clearLayers();
 
       crdList.forEach((crd) => {
-        const marker = L.marker([ crd.lat, crd.lng ]).setIcon(defaultCustomIcon);
+        const marker = L.marker([ crd.latitude, crd.longitude ]).setIcon(defaultCustomIcon);
         marker.addTo(markerLayer);
       });
 

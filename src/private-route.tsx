@@ -1,12 +1,16 @@
 import { Navigate } from 'react-router-dom';
 import { ReactNode } from 'react';
+import { useSelector } from 'react-redux';
+import { StateType } from './reducer';
 type PrivateProps = {
-    userId: string | null;
     children: ReactNode;
 }
 
-export const Private = ({userId, children}:PrivateProps):ReactNode => {
-  if (userId) {
+export const Private = ({children}:PrivateProps):ReactNode => {
+  const authorizationStatus = useSelector((state: StateType) => state.authorizationStatus);
+
+
+  if (authorizationStatus === 'Authorized') {
     return children;
   } else {
     return <Navigate to={'/login'} />;

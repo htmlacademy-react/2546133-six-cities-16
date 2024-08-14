@@ -1,27 +1,27 @@
 import { Card } from '../card/card';
-import { offersMockPropsType } from '../ts_types';
-import { offerType } from '../mocks/offers';
+import { OfferType } from '../ts_types';
 import { useState } from 'react';
+import { OfferListPropType } from '../ts_types';
 
-export const OfferList = ({offerList}:offersMockPropsType) => {
-  const [activeOffer, setActiveOffer] = useState(0);
+export const OfferList = ({offerList}:OfferListPropType) => {
+  const [activeOffer, setActiveOffer] = useState('');
+
   //eslint-disable-next-line
   console.log(activeOffer);
-
-  const hoverOnHandler = (key:number) => {
-    setActiveOffer(key);
+  const hoverOnHandler = (id:string) => {
+    setActiveOffer(id);
   };
   const hoverOffHandler = () => {
-    setActiveOffer(0);
+    setActiveOffer('0');
   };
   if (!offerList) {
     return '';
   }
   return(
-    offerList.map((offer:offerType) => (
+    offerList.map((offer:OfferType) => (
 
-      <span key={offer.key} onMouseEnter={() => hoverOnHandler(offer.key)} onMouseLeave={()=> hoverOffHandler()}>
-        <Card offerMock={offer}/>
+      <span key={offer.id} onMouseEnter={() => hoverOnHandler(offer.id)} onMouseLeave={()=> hoverOffHandler()}>
+        <Card offer={offer}/>
       </span>))
   );
 };
