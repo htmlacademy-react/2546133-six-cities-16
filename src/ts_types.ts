@@ -10,7 +10,7 @@ export type cityListPropsType = {
 
 
 export type reviewPropsType = {
-  review:reviewType;
+  review:CommentType;
 }
 
 export type CrdType = {
@@ -23,6 +23,28 @@ export type HostType = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
+}
+export type ReviewType = {
+  comment: string;
+  rating: number;
+}
+export type PostCommentsType = {
+  id: string;
+  commentObj: ReviewType;
+}
+export type userType = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+}
+
+export type CommentType = {
+  id: string;
+  date: string;
+  user: userType;
+  comment: string;
+  rating: number;
+
 }
 export type OfferDType = {
 
@@ -43,14 +65,6 @@ export type OfferDType = {
     'maxAdults': number;
     }
 
-export type reviewType = {
-  key: number;
-  userPic: string;
-  name: string;
-  reviewRating: number;
-  reviewDate: string;
-  reviewText: string;
-}
 
 export type landLordType = {
   userPic: string;

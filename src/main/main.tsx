@@ -29,8 +29,7 @@ export const Main = () => {
     latitude: offer.location.latitude,
     longitude: offer.location.longitude
   }));
-  //eslint-disable-next-line
-   
+
 
   useEffect(() => {
     dispatch(fetchOfferList());

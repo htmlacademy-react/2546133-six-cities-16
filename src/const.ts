@@ -4,7 +4,8 @@ import { CityType } from './ts_types';
 export const routesAPI = {
   offers: '/six-cities/offers',
   login: '/six-cities/login',
-  favorites:'/six-cities/favorite'
+  favorites:'/six-cities/favorite',
+  comments: '/six-cities/comments'
 };
 
 export const CITY_LIST = ['Paris','Cologne','Brussels','Amsterdam','Hamburg','Dusseldorf'];

@@ -1,5 +1,5 @@
 import { ACTION_CONST } from './actions-const';
-import { OfferType, OfferDType, AuthDataType } from './ts_types';
+import { OfferType, OfferDType, AuthDataType, CommentType } from './ts_types';
 
 export type StateType = {
   city: string | null;
@@ -10,6 +10,7 @@ export type StateType = {
   authorizationStatus: string | null;
   authorizationData: AuthDataType | null;
   favorites: OfferType[];
+  comments: CommentType[];
 };
 
 export const INITIAL_STATE:StateType = {
@@ -20,19 +21,10 @@ export const INITIAL_STATE:StateType = {
   offerListNear: [],
   authorizationStatus: null,
   authorizationData: null,
-  favorites: []
+  favorites: [],
+  comments: []
 };
 
-/*
-type changeCActionType = {
-  type: string;
-  city: string | null;
-}
-
-type changeOLActionType = {
-  type: string;
-  offerList: offerType[];
-}*/
 
 type ActionType =
 {
@@ -45,6 +37,7 @@ type ActionType =
   authorizationStatus: string | null;
   authorizationData: AuthDataType | null;
   favorites: OfferType[];
+  comments: CommentType[];
 }
 
 
@@ -58,6 +51,7 @@ export const cityReducer = (state = INITIAL_STATE, action: ActionType):StateType
     case ACTION_CONST.SET_AUTHORIZATION_STATUS: return {...state, authorizationStatus: action.authorizationStatus};
     case ACTION_CONST.SET_AUTHORIZATION_DATA: return {...state, authorizationData: action.authorizationData};
     case ACTION_CONST.SET_FAVORITES: return {...state, favorites: action.favorites};
+    case ACTION_CONST.SET_COMMENTS: return {...state, comments: action.comments};
     default: return state;
   }
 };

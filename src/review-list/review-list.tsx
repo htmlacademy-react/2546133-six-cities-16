@@ -1,8 +1,30 @@
 //import { OfferPropType } from '../ts_types';
-//import { Review } from '../review/review';
-export const ReviewList = () => (
-  <ul className="reviews__list">
+import { Review } from '../review/review';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchComments } from '../action';
+import { DispatchType, StateType, CommentType } from '../ts_types';
+import { useSelector } from 'react-redux';
+import { Spiner } from '../spinner/spiner';
+export const ReviewList = () => {
+  const useAppDispatch = () => useDispatch<DispatchType>();
+  const dispatch = useAppDispatch();
+  const currentOffer = useSelector((state: StateType) => state.currentOffer);
+  const comments = useSelector((state: StateType) => state.comments);
 
-    {/* {offer.reviews.map((review:reviewType) => <Review key={review.key} review={review}/>)}*/}
-  </ul>
-);
+  useEffect(() =>{
+
+    if (currentOffer) {
+      dispatch(fetchComments(currentOffer.id));
+    }
+  }, []);
+  if(!comments) {
+    return (<Spiner/>);
+  }
+  return (
+    <ul className="reviews__list">
+      {comments.map((review:CommentType) => <Review key={review.id} review={review}/>)}
+    </ul>
+  );
+
+};
