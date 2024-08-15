@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCurrentOffer, fetchOfferListNear } from '../action';
 import { useSelector } from 'react-redux';
-
+import { Error } from '../error/error';
 import { OfferList } from '../offer-list/offer-list';
 import { StateType } from '../reducer';
 import { Spiner } from '../spinner/spiner';
@@ -21,6 +21,7 @@ export const Offer = ()=> {
   const currentOfferId = stateLocation.state as string;
   const currentOffer = useSelector((state: StateType) => state.currentOffer);
   const currentOfferListNear = useSelector((state:StateType) => state.offerListNear);
+  const authorizationData = useSelector((state: StateType) => state.authorizationData);
   //const offersNear = offersMock.filter((offer) => currentOffer.id !== offer.key);
   useEffect(() => {
     //read documentation
@@ -33,9 +34,15 @@ export const Offer = ()=> {
     latitude: offer.location.latitude,
     longitude: offer.location.longitude
   }));
+
+  if (!currentOfferId) {
+    return (<Error/>);
+  }
+
   if (!currentOffer) {
     return (<Spiner/>);
   }
+
 
   return(
     <div className="page">
@@ -162,7 +169,10 @@ export const Offer = ()=> {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
                 <ReviewList/>
-                <CommentForm/>
+
+
+                {(authorizationData?.token) && <CommentForm/> }
+
               </section>
             </div>
           </div>

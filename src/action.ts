@@ -1,7 +1,7 @@
 import { OfferType } from './ts_types';
 import { ACTION_CONST } from './actions-const';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { DispatchType, StateType, AuthDataType, LoginObjType } from './ts_types';
+import { DispatchType, StateType, AuthDataType, LoginObjType,CommentType, PostCommentsType } from './ts_types';
 import { AxiosInstance } from 'axios';
 import { routesAPI } from './const';
 
@@ -20,6 +20,9 @@ export const setAuthStatus = (authorizationStatus:string) => ({type: ACTION_CONS
 export const setAuthData = (authorizationData:AuthDataType) => ({type: ACTION_CONST.SET_AUTHORIZATION_DATA, authorizationData: authorizationData });
 
 export const setFavorites = (favorites:OfferType[]) => ({type: ACTION_CONST.SET_FAVORITES, favorites: favorites});
+
+export const setComments = (comments: CommentType[]) => ({type: ACTION_CONST.SET_COMMENTS, comments: comments});
+
 
 export const fetchOfferList = createAsyncThunk<void, undefined, {
     dispatch: DispatchType;
@@ -103,3 +106,32 @@ export const fetchFavorites = createAsyncThunk<void, undefined, {
             dispatch(setFavorites(data));
 
           });
+
+
+export const fetchComments = createAsyncThunk<void, string, {
+  dispatch: DispatchType;
+  state: StateType;
+  extra: AxiosInstance;
+}>(
+  '/data/comments',
+  async(_args, {dispatch, extra: objApi}) => {
+    const {data} = await objApi.get<CommentType[]>(`${routesAPI.comments}/${_args}`);
+    dispatch(setComments(data));
+
+  }
+);
+
+export const postComments = createAsyncThunk<void, PostCommentsType, {
+  dispatch: DispatchType;
+  state: StateType;
+  extra: AxiosInstance;
+}>(
+  '/data/post_comments',
+  async(_args, {dispatch, extra: objApi}) => {
+    const {data} = await objApi.post<CommentType[]>(`${routesAPI.comments}/${_args.id}`, _args.commentObj,);
+    dispatch(fetchComments(_args.id));
+    //eslint-disable-next-line
+    console.log(data);
+
+  }
+);
