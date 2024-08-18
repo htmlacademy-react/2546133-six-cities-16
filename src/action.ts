@@ -1,7 +1,7 @@
 import { OfferType } from './ts_types';
 import { ACTION_CONST } from './actions-const';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { DispatchType, StateType, AuthDataType, LoginObjType,CommentType, PostCommentsType } from './ts_types';
+import { DispatchType, StateType, AuthDataType, LoginObjType,CommentType, PostCommentsType, PostFavoritesType } from './ts_types';
 import { AxiosInstance } from 'axios';
 import { routesAPI } from './const';
 
@@ -22,6 +22,12 @@ export const setAuthData = (authorizationData:AuthDataType) => ({type: ACTION_CO
 export const setFavorites = (favorites:OfferType[]) => ({type: ACTION_CONST.SET_FAVORITES, favorites: favorites});
 
 export const setComments = (comments: CommentType[]) => ({type: ACTION_CONST.SET_COMMENTS, comments: comments});
+
+export const logOff = () => ({type:ACTION_CONST.LOG_OFF});
+
+export const setSort = (sort: string) => ({type: ACTION_CONST.SET_SORT, sort: sort});
+
+export const setActiveOffer = (offerId: string | null) => { console.log('setActiveOffer ', ACTION_CONST.SET_ACTIVE_OFFER); return {type: ACTION_CONST.SET_ACTIVE_OFFER, offerId: offerId}};
 
 
 export const fetchOfferList = createAsyncThunk<void, undefined, {
@@ -131,7 +137,22 @@ export const postComments = createAsyncThunk<void, PostCommentsType, {
     const {data} = await objApi.post<CommentType[]>(`${routesAPI.comments}/${_args.id}`, _args.commentObj,);
     dispatch(fetchComments(_args.id));
     //eslint-disable-next-line
-    console.log(data);
 
   }
 );
+
+
+export const postFavorites = createAsyncThunk<void, PostFavoritesType, {
+  dispatch: DispatchType;
+  state: StateType;
+  extra: AxiosInstance;
+}>(
+'/data/favorites',
+async(_args, {dispatch, extra: objApi}) => {
+  const {data} = await objApi.post<OfferType>(`${routesAPI.favorites}/${_args.id}/${_args.status}`);
+  dispatch(fetchOfferList());
+
+});
+
+
+ 

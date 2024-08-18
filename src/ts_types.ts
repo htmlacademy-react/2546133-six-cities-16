@@ -32,6 +32,12 @@ export type PostCommentsType = {
   id: string;
   commentObj: ReviewType;
 }
+
+export type PostFavoritesType = {
+  id: string;
+  status: number;
+}
+
 export type userType = {
   name: string;
   avatarUrl: string;
