@@ -4,6 +4,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { DispatchType, StateType, AuthDataType, LoginObjType,CommentType, PostCommentsType, PostFavoritesType } from './ts_types';
 import { AxiosInstance } from 'axios';
 import { routesAPI } from './const';
+import { sortReviews } from './utils';
+import { setToken, rmToken } from './token';
 
 export const changeCityAction = (city:string) => ({type: ACTION_CONST.CHANGE_CITY, city: city});
 
@@ -27,7 +29,7 @@ export const logOff = () => ({type:ACTION_CONST.LOG_OFF});
 
 export const setSort = (sort: string) => ({type: ACTION_CONST.SET_SORT, sort: sort});
 
-export const setActiveOffer = (offerId: string | null) => { console.log('setActiveOffer ', ACTION_CONST.SET_ACTIVE_OFFER); return {type: ACTION_CONST.SET_ACTIVE_OFFER, offerId: offerId}};
+export const setActiveOffer = (offerId: string | null) => ({type: ACTION_CONST.SET_ACTIVE_OFFER, offerId: offerId});
 
 
 export const fetchOfferList = createAsyncThunk<void, undefined, {
@@ -75,11 +77,14 @@ export const login = createAsyncThunk<void, undefined, {
 }>(
   '/auth/login',
   async(_args, {dispatch, extra: objApi}) => {
-    let {data} = await objApi.get<string>(routesAPI.login);
-    if(!data) {
-      data = 'Unauthorized';
+    const {data} = await objApi.get<AuthDataType>(routesAPI.login);
+    let status = 'Unathorized';
+    if(data.token) {
+      status = 'Authorized';
+      dispatch(setAuthData(data));
     }
-    dispatch(setAuthStatus(data));
+    dispatch(setAuthStatus(status));
+
   });
 
 export const loginPost = createAsyncThunk<void, LoginObjType, {
@@ -95,6 +100,7 @@ export const loginPost = createAsyncThunk<void, LoginObjType, {
           status = 'Unauthorized';
         } else {
           status = 'Authorized';
+          setToken(data.token);
         }
         dispatch(setAuthStatus(status));
         dispatch(setAuthData(data));
@@ -122,7 +128,7 @@ export const fetchComments = createAsyncThunk<void, string, {
   '/data/comments',
   async(_args, {dispatch, extra: objApi}) => {
     const {data} = await objApi.get<CommentType[]>(`${routesAPI.comments}/${_args}`);
-    dispatch(setComments(data));
+    dispatch(setComments(data.sort(sortReviews)));
 
   }
 );
@@ -134,9 +140,8 @@ export const postComments = createAsyncThunk<void, PostCommentsType, {
 }>(
   '/data/post_comments',
   async(_args, {dispatch, extra: objApi}) => {
-    const {data} = await objApi.post<CommentType[]>(`${routesAPI.comments}/${_args.id}`, _args.commentObj,);
+    await objApi.post<CommentType[]>(`${routesAPI.comments}/${_args.id}`, _args.commentObj,);
     dispatch(fetchComments(_args.id));
-    //eslint-disable-next-line
 
   }
 );
@@ -147,12 +152,25 @@ export const postFavorites = createAsyncThunk<void, PostFavoritesType, {
   state: StateType;
   extra: AxiosInstance;
 }>(
-'/data/favorites',
-async(_args, {dispatch, extra: objApi}) => {
-  const {data} = await objApi.post<OfferType>(`${routesAPI.favorites}/${_args.id}/${_args.status}`);
-  dispatch(fetchOfferList());
+  '/auth/favorites',
+  async(_args, {dispatch, extra: objApi}) => {
+    await objApi.post<OfferType>(`${routesAPI.favorites}/${_args.id}/${_args.status}`);
+    dispatch(fetchOfferList());
+    dispatch(fetchFavorites());
 
-});
+  });
 
 
- 
+export const endSession = createAsyncThunk<void, void, {
+    dispatch: DispatchType;
+    state: StateType;
+    extra: AxiosInstance;
+  }>(
+    '/auth/logoff',
+    async(_args, {dispatch, extra: objApi}) => {
+      await objApi.delete(`${routesAPI.logout}`);
+      rmToken();
+      dispatch(logOff());
+
+    });
+

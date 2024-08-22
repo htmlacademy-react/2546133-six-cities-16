@@ -3,7 +3,6 @@ import { CommentForm } from '../comment-form/comment-form';
 import { OfferType } from '../ts_types';
 import { ReviewList } from '../review-list/review-list';
 import { MapComp } from '../map/map';
-//import { CrdType } from '../ts_types';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCurrentOffer, fetchOfferListNear, postFavorites } from '../action';
@@ -27,12 +26,19 @@ export const Offer = ()=> {
   const currentOfferListNear = useSelector((state:StateType) => state.offerListNear);
   const authorizationStatus = useSelector((state: StateType) => state.authorizationStatus);
   const comments = useSelector((state:StateType) => state.comments);
-  //const offersNear = offersMock.filter((offer) => currentOffer.id !== offer.key);
   useEffect(() => {
-    //read documentation
     dispatch(fetchCurrentOffer(currentOfferId));
     dispatch(fetchOfferListNear(currentOfferId));
   }, []);
+
+
+  if (!currentOfferId) {
+    return (<Error/>);
+  }
+
+  if (!currentOffer || !currentOfferListNear) {
+    return (<Spiner/>);
+  }
 
 
   const crdNear = currentOfferListNear.map((offer:OfferType) => ({ id: offer.id,
@@ -40,30 +46,25 @@ export const Offer = ()=> {
     longitude: offer.location.longitude
   }));
 
-  if (!currentOfferId) {
-    return (<Error/>);
-  }
+  const crdNearMap = crdNear.slice(0,3);
 
-  if (!currentOffer) {
-    return (<Spiner/>);
-  }
+  crdNearMap.push({ id: currentOffer.id,
+    latitude: currentOffer.location.latitude,
+    longitude: currentOffer.location.longitude
+  });
+
 
   const onClickFavorites = () => {
-    console.log('clickeed');
-    if(authorizationStatus==='Authorized') {
+    if(authorizationStatus === 'Authorized') {
       if (currentOffer) {
-      dispatch(postFavorites({id: currentOffer?.id, status: (currentOffer?.isFavorite)?0:1}));
+        dispatch(postFavorites({id: currentOffer?.id, status: (currentOffer?.isFavorite) ? 0 : 1}));
       }
+    } else {
+      navigate('/login');
     }
-    else
-    {
-      navigate("/login");
-    }
- 
-      
 
-     
-  }
+
+  };
 
   return(
     <div className="page">
@@ -73,26 +74,30 @@ export const Offer = ()=> {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-            {currentOffer.images.map((img:string, indx: number) => {
-              if(indx<6) {
-              return(
-                <div className="offer__image-wrapper">
-                <img className="offer__image" src={img} alt="Photo studio"/>
-                </div>  )}
-})}
+              {currentOffer.images.map((img:string, indx: number) => {
+                if(indx < 6) {
+                  return(
+                    <div key={img} className="offer__image-wrapper">
+                      <img className="offer__image" src={img} alt="Photo studio"/>
+                    </div>);
+                }
+              })}
 
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className={`offer__mark ${currentOffer.isPremium?'':'visually-hidden'}`}>
+              <div className={`offer__mark ${currentOffer.isPremium ? '' : 'visually-hidden'}`}>
                 <span>Premium</span>
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button" onClick={() => {onClickFavorites()}}>
+                <button className="offer__bookmark-button button" type="button" onClick={() => {
+                  onClickFavorites();
+                }}
+                >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -134,14 +139,14 @@ export const Offer = ()=> {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className={`offer__avatar-wrapper ${currentOffer.host.isPro?'offer__avatar-wrapper--pro':''} user__avatar-wrapper`}>
+                  <div className={`offer__avatar-wrapper ${currentOffer.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
                     <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
                     {currentOffer.host.name}
                   </span>
                   <span className="offer__user-status">
-                    {currentOffer.host.isPro?'Pro':''}
+                    {currentOffer.host.isPro ? 'Pro' : ''}
                   </span>
                 </div>
                 <div className="offer__description">
@@ -162,7 +167,7 @@ export const Offer = ()=> {
           </div>
           <section className="map">
             {/*comments */}
-            <MapComp crdList={crdNear}></MapComp>
+            <MapComp crdList={crdNearMap} offerId={currentOfferId}></MapComp>
           </section>
         </section>
         <div className="container">

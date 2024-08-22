@@ -1,9 +1,9 @@
-import { Navigation } from "../navigation/navigation";
+import { Navigation } from '../navigation/navigation';
 
 export const Error = () => (
   <div>
-  <Navigation/>
-   
+    <Navigation/>
+
             Error 404
   </div>
 );

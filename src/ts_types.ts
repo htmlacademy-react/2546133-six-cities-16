@@ -81,6 +81,7 @@ export type landLordType = {
 
 export type MapPropsType = {
   crdList: CrdType[];
+  offerId: string | null;
 }
 
 export type LocationType = {

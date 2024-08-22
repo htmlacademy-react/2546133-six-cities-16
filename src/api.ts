@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { store } from './store';
+import { getToken } from './token';
 
 const AXIOS_CONF = {
   baseURL: 'https://16.design.htmlacademy.pro',
@@ -13,7 +13,7 @@ export const configureAxios = () => {
   api.interceptors.request.use(
     (config) => {
 
-      const token = store.getState().authorizationData?.token;
+      const token = getToken();
 
       if (token && config.headers) {
         config.headers['x-token'] = token;

@@ -6,9 +6,9 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { StateType } from '../reducer';
 import { OfferType } from '../ts_types';
-import { CITY_LIST } from '../const';
 import { DispatchType } from '../ts_types';
 import { Navigation } from '../navigation/navigation';
+import { FavoritesEmpty } from '../favorites-empty';
 export const Favorites = () => {
   const useAppDispatch = () => useDispatch<DispatchType>();
   const dispatch = useAppDispatch();
@@ -17,6 +17,17 @@ export const Favorites = () => {
   useEffect(()=>{
     dispatch(fetchFavorites());
   }, []);
+
+  if (favorites.length <= 0) {
+    return(
+      <FavoritesEmpty/>
+    );
+  }
+
+  const cityList = favorites.map((item) => item.city.name).filter((value, index, self) =>
+    self.indexOf(value) === index);
+
+
   return (
 
     <div className="page">
@@ -27,7 +38,7 @@ export const Favorites = () => {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {CITY_LIST.map((city:string) => (
+              {cityList.map((city:string) => (
                 <li key={city} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">

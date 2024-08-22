@@ -10,7 +10,6 @@ import { changeCityAction, fetchOfferList } from '../action';
 import { StateType } from '../reducer';
 import { getOfferList } from '../utils';
 import { Spiner } from '../spinner/spiner';
-import { Link } from 'react-router-dom';
 import { CITY_LIST } from '../const';
 import { DispatchType } from '../ts_types';
 import { Navigation } from '../navigation/navigation';
@@ -23,9 +22,8 @@ export const Main = () => {
   const currentCity = useSelector((state:StateType) =>state.city);
   const currentOfferList = useSelector((state:StateType) => state.offerList);
   const isLoading = useSelector((state:StateType) => state.isLoading);
-  const authorizationStatus = useSelector((state:StateType) => state.authorizationStatus);
-  const authorizationData = useSelector((state:StateType) => state.authorizationData);
   const sort = useSelector((state:StateType) => state.sort);
+  const offerId = useSelector((state:StateType) => state.offerId);
 
   const crdList = getOfferList(currentOfferList,currentCity, sort).map((offer:OfferType) => ({ id: offer.id,
     latitude: offer.location.latitude,
@@ -37,7 +35,6 @@ export const Main = () => {
     dispatch(fetchOfferList());
 
     dispatch(changeCityAction('Paris'));
-    //dispatch(setOfferList(getOfferList(offersMock, 'Paris')));
   }, []);
 
 
@@ -71,7 +68,7 @@ export const Main = () => {
             <div className="cities__right-section">
               <section className="cities__map map">
 
-                {crdList.length > 0 && <MapComp crdList={crdList}/>}
+                {crdList.length > 0 && <MapComp crdList={crdList} offerId = {offerId}/>}
 
               </section>
             </div>

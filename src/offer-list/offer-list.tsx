@@ -1,14 +1,11 @@
 import { Card } from '../card/card';
-import { OfferType, StateType } from '../ts_types';
+import { OfferType} from '../ts_types';
 import { useDispatch } from 'react-redux';
 import { OfferListPropType, DispatchType } from '../ts_types';
-import { useSelector } from 'react-redux';
 import { setActiveOffer } from '../action';
 
 
 export const OfferList = ({offerList}:OfferListPropType) => {
-  const sort = useSelector((state:StateType) => state.sort);
-  const offerId = useSelector((state: StateType) => state.offerId);
   const useAppDispatch = () => useDispatch<DispatchType>();
   const dispatch = useAppDispatch();
 

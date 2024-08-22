@@ -4,28 +4,27 @@ import { MapPropsType } from '../ts_types';
 import { useSelector } from 'react-redux';
 import useMap from '../hooks/use-map';
 
-import L, {Icon} from 'leaflet';
+import L from 'leaflet';
 import { StateType } from '../reducer';
 import { defaultCustomIcon, activeCustomIcon } from '../const';
 
-export const MapComp = ({crdList}:MapPropsType) => {
+export const MapComp = ({crdList,offerId}:MapPropsType) => {
 
 
   const currentCity = useSelector((state: StateType) => state.city);
-  const offerId = useSelector((state: StateType) => state.offerId);
- 
+
+
   const currentCityCrd = CITIES.find((city) => {
     if (city.name === currentCity) {
       return true;
     }
   });
- 
+
 
   const mapRef = useRef(null);
   const map = useMap(mapRef);
 
-  console.log(offerId, 'offerId');
- 
+
   useEffect(() => {
     if (map && currentCityCrd) {
       map.flyTo([ currentCityCrd.location.latitude, currentCityCrd.location.longitude ], currentCityCrd.location.zoom);
@@ -35,8 +34,8 @@ export const MapComp = ({crdList}:MapPropsType) => {
 
       crdList.forEach((crd) => {
 
- 
-        const marker = L.marker([ crd.latitude, crd.longitude ]).setIcon((crd.id == offerId)?activeCustomIcon:defaultCustomIcon);
+
+        const marker = L.marker([ crd.latitude, crd.longitude ]).setIcon((crd.id === offerId) ? activeCustomIcon : defaultCustomIcon);
         marker.addTo(markerLayer);
       });
 
@@ -45,7 +44,7 @@ export const MapComp = ({crdList}:MapPropsType) => {
       };
     }
   });
- 
+
   return (
     <div
       style={{height: '700px'}}

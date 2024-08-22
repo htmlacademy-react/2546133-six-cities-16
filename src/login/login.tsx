@@ -1,8 +1,10 @@
 import { loginPost } from '../action';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { DispatchType} from '../ts_types';
+import { DispatchType, StateType} from '../ts_types';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export const Login = () => {
 
@@ -10,6 +12,8 @@ export const Login = () => {
   const dispatch = useAppDispatch();
   const inputEmail = useRef<HTMLInputElement | null>(null);
   const inputPassword = useRef<HTMLInputElement | null>(null);
+  const authorizationStatus = useSelector((state:StateType) => state.authorizationStatus);
+  const navigate = useNavigate();
 
   const handleFormSubmit = (evt:React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -20,6 +24,10 @@ export const Login = () => {
       }));
     }
   };
+
+  if (authorizationStatus === 'Authorized') {
+    navigate('/');
+  }
 
 
   return(
