@@ -1,21 +1,24 @@
 import { Card } from '../card/card';
-import { OfferType } from '../ts_types';
-import { useState } from 'react';
-import { OfferListPropType } from '../ts_types';
+import { OfferType} from '../ts_types';
+import { useDispatch } from 'react-redux';
+import { OfferListPropType, DispatchType } from '../ts_types';
+import { setActiveOffer } from '../action';
+
 
 export const OfferList = ({offerList}:OfferListPropType) => {
-  const [activeOffer, setActiveOffer] = useState('');
+  const useAppDispatch = () => useDispatch<DispatchType>();
+  const dispatch = useAppDispatch();
 
-  //eslint-disable-next-line
-  console.log(activeOffer);
   const hoverOnHandler = (id:string) => {
-    setActiveOffer(id);
+    dispatch(setActiveOffer(id));
   };
   const hoverOffHandler = () => {
-    setActiveOffer('0');
+    dispatch(setActiveOffer(null));
   };
-  if (!offerList) {
-    return '';
+
+
+  if (!offerList || offerList.length === 0) {
+    return 'No places to stay available';
   }
   return(
     offerList.map((offer:OfferType) => (

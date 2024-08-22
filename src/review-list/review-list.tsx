@@ -1,4 +1,3 @@
-//import { OfferPropType } from '../ts_types';
 import { Review } from '../review/review';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -23,7 +22,7 @@ export const ReviewList = () => {
   }
   return (
     <ul className="reviews__list">
-      {comments.map((review:CommentType) => <Review key={review.id} review={review}/>)}
+      {comments.slice(0,10).map((review:CommentType) => <Review key={review.id} review={review}/>)}
     </ul>
   );
 

@@ -11,6 +11,8 @@ export type StateType = {
   authorizationData: AuthDataType | null;
   favorites: OfferType[];
   comments: CommentType[];
+  sort: string;
+  offerId: string | null;
 };
 
 export const INITIAL_STATE:StateType = {
@@ -22,7 +24,9 @@ export const INITIAL_STATE:StateType = {
   authorizationStatus: null,
   authorizationData: null,
   favorites: [],
-  comments: []
+  comments: [],
+  sort: 'Popular',
+  offerId: null
 };
 
 
@@ -38,6 +42,8 @@ type ActionType =
   authorizationData: AuthDataType | null;
   favorites: OfferType[];
   comments: CommentType[];
+  sort: string;
+  offerId: string | null;
 }
 
 
@@ -52,6 +58,18 @@ export const cityReducer = (state = INITIAL_STATE, action: ActionType):StateType
     case ACTION_CONST.SET_AUTHORIZATION_DATA: return {...state, authorizationData: action.authorizationData};
     case ACTION_CONST.SET_FAVORITES: return {...state, favorites: action.favorites};
     case ACTION_CONST.SET_COMMENTS: return {...state, comments: action.comments};
+    case ACTION_CONST.LOG_OFF: return {
+      ...state,
+      currentOffer: INITIAL_STATE.currentOffer,
+      offerListNear: INITIAL_STATE.offerListNear,
+      authorizationStatus: INITIAL_STATE.authorizationStatus,
+      authorizationData: INITIAL_STATE.authorizationData,
+      favorites: INITIAL_STATE.favorites,
+      comments: INITIAL_STATE.comments
+
+    };
+    case ACTION_CONST.SET_SORT: return {...state, sort: action.sort};
+    case ACTION_CONST.SET_ACTIVE_OFFER: return {...state, offerId: action.offerId};
     default: return state;
   }
 };
