@@ -1,5 +1,5 @@
 import { reviewPropsType } from '../ts_types';
-
+import { getRating } from '../utils';
 
 export const Review = ({review}:reviewPropsType) => (
   <li className="reviews__item">
@@ -14,7 +14,7 @@ export const Review = ({review}:reviewPropsType) => (
     <div className="reviews__info">
       <div className="reviews__rating rating">
         <div className="reviews__stars rating__stars">
-          <span style={{width: '80%'}}></span>
+          <span style={{width: `${getRating(review.rating)}%`}}></span>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>

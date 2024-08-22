@@ -1,12 +1,28 @@
 
 import { CityType } from './ts_types';
+import { Icon } from 'leaflet';
 
 export const routesAPI = {
   offers: '/six-cities/offers',
   login: '/six-cities/login',
   favorites:'/six-cities/favorite',
-  comments: '/six-cities/comments'
+  comments: '/six-cities/comments',
+  logout: '/six-cities/logout'
 };
+
+export const defaultCustomIcon = new Icon({
+  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+
+export const activeCustomIcon = new Icon({
+  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
+});
+
 
 export const CITY_LIST = ['Paris','Cologne','Brussels','Amsterdam','Hamburg','Dusseldorf'];
 

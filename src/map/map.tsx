@@ -4,27 +4,26 @@ import { MapPropsType } from '../ts_types';
 import { useSelector } from 'react-redux';
 import useMap from '../hooks/use-map';
 
-import L, {Icon} from 'leaflet';
+import L from 'leaflet';
 import { StateType } from '../reducer';
+import { defaultCustomIcon, activeCustomIcon } from '../const';
 
-export const MapComp = ({crdList}:MapPropsType) => {
+export const MapComp = ({crdList,offerId}:MapPropsType) => {
 
 
   const currentCity = useSelector((state: StateType) => state.city);
+
 
   const currentCityCrd = CITIES.find((city) => {
     if (city.name === currentCity) {
       return true;
     }
   });
-  const defaultCustomIcon = new Icon({
-    iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+
 
   const mapRef = useRef(null);
   const map = useMap(mapRef);
+
 
   useEffect(() => {
     if (map && currentCityCrd) {
@@ -34,7 +33,9 @@ export const MapComp = ({crdList}:MapPropsType) => {
       markerLayer.clearLayers();
 
       crdList.forEach((crd) => {
-        const marker = L.marker([ crd.latitude, crd.longitude ]).setIcon(defaultCustomIcon);
+
+
+        const marker = L.marker([ crd.latitude, crd.longitude ]).setIcon((crd.id === offerId) ? activeCustomIcon : defaultCustomIcon);
         marker.addTo(markerLayer);
       });
 
@@ -43,7 +44,6 @@ export const MapComp = ({crdList}:MapPropsType) => {
       };
     }
   });
-
 
   return (
     <div
