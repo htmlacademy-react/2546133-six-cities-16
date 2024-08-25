@@ -1,5 +1,6 @@
 import { reviewPropsType } from '../ts_types';
 import { getRating } from '../utils';
+import Moment from 'moment';
 
 export const Review = ({review}:reviewPropsType) => (
   <li className="reviews__item">
@@ -21,7 +22,7 @@ export const Review = ({review}:reviewPropsType) => (
       <p className="reviews__text">
         {review.comment}
       </p>
-      <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+      <time className="reviews__time" dateTime={`${Moment(review.date).format('MMMM YYYY')}`}>{Moment(review.date).format('MMMM YYYY')}</time>
     </div>
   </li>
 );
