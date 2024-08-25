@@ -1,28 +1,20 @@
 
 import { FavoritesCard } from '../favorites-card/favorites-card';
-import { fetchFavorites} from '../action';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { StateType } from '../reducer';
 import { OfferType } from '../ts_types';
-import { DispatchType } from '../ts_types';
 import { Navigation } from '../navigation/navigation';
 import { FavoritesEmpty } from '../favorites-empty';
+import { Link } from 'react-router-dom';
 export const Favorites = () => {
-  const useAppDispatch = () => useDispatch<DispatchType>();
-  const dispatch = useAppDispatch();
   const favorites = useSelector((state:StateType) => state.favorites);
-
-  useEffect(()=>{
-    dispatch(fetchFavorites());
-  }, []);
 
   if (favorites.length <= 0) {
     return(
       <FavoritesEmpty/>
     );
   }
+
 
   const cityList = favorites.map((item) => item.city.name).filter((value, index, self) =>
     self.indexOf(value) === index);
@@ -42,7 +34,7 @@ export const Favorites = () => {
                 <li key={city} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href="#">
+                      <a className="locations__item-link">
                         <span>{city}</span>
                       </a>
                     </div>
@@ -60,9 +52,9 @@ export const Favorites = () => {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link to={'/'} className="footer__logo-link">
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
+        </Link>
       </footer>
     </div>
   );

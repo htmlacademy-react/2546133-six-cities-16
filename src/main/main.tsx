@@ -6,7 +6,7 @@ import { MapComp } from '../map/map';
 import { CityList } from '../city-list/city-list';
 import { useSelector,useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { changeCityAction, fetchOfferList } from '../action';
+import { fetchOfferList } from '../action';
 import { StateType } from '../reducer';
 import { getOfferList } from '../utils';
 import { Spiner } from '../spinner/spiner';
@@ -33,8 +33,6 @@ export const Main = () => {
 
   useEffect(() => {
     dispatch(fetchOfferList());
-
-    dispatch(changeCityAction('Paris'));
   }, []);
 
 

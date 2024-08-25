@@ -60,12 +60,9 @@ export const cityReducer = (state = INITIAL_STATE, action: ActionType):StateType
     case ACTION_CONST.SET_COMMENTS: return {...state, comments: action.comments};
     case ACTION_CONST.LOG_OFF: return {
       ...state,
-      currentOffer: INITIAL_STATE.currentOffer,
-      offerListNear: INITIAL_STATE.offerListNear,
-      authorizationStatus: INITIAL_STATE.authorizationStatus,
+      authorizationStatus: 'Unauthorized',
       authorizationData: INITIAL_STATE.authorizationData,
-      favorites: INITIAL_STATE.favorites,
-      comments: INITIAL_STATE.comments
+      favorites: INITIAL_STATE.favorites
 
     };
     case ACTION_CONST.SET_SORT: return {...state, sort: action.sort};
