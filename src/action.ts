@@ -77,13 +77,17 @@ export const login = createAsyncThunk<void, undefined, {
 }>(
   '/auth/login',
   async(_args, {dispatch, extra: objApi}) => {
-    const {data} = await objApi.get<AuthDataType>(routesAPI.login);
-    let status = 'Unathorized';
-    if(data.token) {
-      status = 'Authorized';
-      dispatch(setAuthData(data));
+    try {
+      const {data} = await objApi.get<AuthDataType>(routesAPI.login);
+      let status = 'Unauthorized';
+      if(data.token) {
+        status = 'Authorized';
+        dispatch(setAuthData(data));
+      }
+      dispatch(setAuthStatus(status));
+    } catch (error:unknown) {
+      dispatch(setAuthStatus('Unauthorized'));
     }
-    dispatch(setAuthStatus(status));
 
   });
 

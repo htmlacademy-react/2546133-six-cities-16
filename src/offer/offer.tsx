@@ -29,7 +29,7 @@ export const Offer = ()=> {
   useEffect(() => {
     dispatch(fetchCurrentOffer(currentOfferId));
     dispatch(fetchOfferListNear(currentOfferId));
-  }, []);
+  }, [currentOfferId]);
 
 
   if (!currentOfferId) {

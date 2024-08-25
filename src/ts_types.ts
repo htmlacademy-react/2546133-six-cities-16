@@ -33,6 +33,11 @@ export type PostCommentsType = {
   commentObj: ReviewType;
 }
 
+export type AxiosErrorType = {
+  type: string;
+  message: string;
+}
+
 export type PostFavoritesType = {
   id: string;
   status: number;

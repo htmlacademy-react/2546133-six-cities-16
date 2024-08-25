@@ -28,7 +28,7 @@ export const CommentForm = () => {
       setIsFormLocked(true);
       setIsBtnLocked(true);
       const data = await dispatch(postComments({id:currentOffer.id, commentObj: {comment: inputComment.current.value, rating: rating }}));
-      if (data.type !== '/data/post_comments/fulfille1d') {
+      if (data.type !== '/data/post_comments/fulfilled') {
         toast('Error sending comment');
       } else {
         inputComment.current.value = '';
