@@ -29,7 +29,7 @@ export const Offer = ()=> {
   useEffect(() => {
     dispatch(fetchCurrentOffer(currentOfferId));
     dispatch(fetchOfferListNear(currentOfferId));
-  }, [currentOfferId]);
+  }, [currentOfferId, dispatch]);
 
 
   if (!currentOfferId) {
@@ -98,7 +98,7 @@ export const Offer = ()=> {
                   onClickFavorites();
                 }}
                 >
-                  <svg className="offer__bookmark-icon" width="31" height="33">
+                  <svg className={`offer__bookmark-icon${currentOffer.isFavorite === true ? '--active' : ''}`} width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -113,13 +113,13 @@ export const Offer = ()=> {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {currentOffer.type}
+                  {currentOffer.type[0].toUpperCase() + currentOffer.type.slice(1).toLowerCase()}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {currentOffer.bedrooms} Bedrooms
+                  {currentOffer.bedrooms} Bedroom{currentOffer.bedrooms > 1 ? 's' : ''}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {currentOffer.maxAdults} adults
+                  Max {currentOffer.maxAdults} adult{currentOffer.maxAdults > 1 ? 's' : ''}
                 </li>
               </ul>
               <div className="offer__price">
@@ -174,7 +174,7 @@ export const Offer = ()=> {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferList offerList ={currentOfferListNear}/>
+              <OfferList offerList ={currentOfferListNear.slice(0,3)}/>
             </div>
           </section>
         </div>

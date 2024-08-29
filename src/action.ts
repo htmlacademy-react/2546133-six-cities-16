@@ -11,7 +11,6 @@ export const changeCityAction = (city:string) => ({type: ACTION_CONST.CHANGE_CIT
 
 export const setOfferList = (offerList:OfferType[]) => ({type: ACTION_CONST.SET_OFFER_LIST, offerList: offerList});
 
-export const setIsLoading = (isLoading: boolean) => ({type: ACTION_CONST.SET_LOADING, isLoading: isLoading});
 
 export const setCurrentOffer = (currentOffer:OfferType) => ({type: ACTION_CONST.SET_CURRENT_OFFER, currentOffer:currentOffer });
 
@@ -39,10 +38,12 @@ export const fetchOfferList = createAsyncThunk<void, undefined, {
 }>(
   '/data/offers',
   async (_args, {dispatch, extra: objApi}) => {
-    dispatch(setIsLoading(true));
-    const { data } = await objApi.get<OfferType[]>(routesAPI.offers);
-    dispatch(setIsLoading(false));
-    dispatch(setOfferList(data));
+    try {
+      const { data } = await objApi.get<OfferType[]>(routesAPI.offers);
+      dispatch(setOfferList(data));
+    } catch (err) {
+      dispatch(setOfferList([]));
+    }
   }
 );
 
@@ -161,6 +162,7 @@ export const postFavorites = createAsyncThunk<void, PostFavoritesType, {
     await objApi.post<OfferType>(`${routesAPI.favorites}/${_args.id}/${_args.status}`);
     dispatch(fetchOfferList());
     dispatch(fetchFavorites());
+    dispatch(fetchCurrentOffer(_args.id));
 
   });
 

@@ -1,9 +1,9 @@
 import { OfferType, CommentType } from './ts_types';
 
 export const sortReviews = (a:CommentType,b:CommentType):number => {
-  if(a.date < b.date) {
+  if(a.date > b.date) {
     return -1;
-  } else if(a.date > b.date) {
+  } else if(a.date < b.date) {
     return 1;
   } else {
     return 0;
