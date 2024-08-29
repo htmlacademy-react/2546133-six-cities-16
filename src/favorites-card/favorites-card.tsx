@@ -14,9 +14,9 @@ export const FavoritesCard = ({offer}:OfferPropType) => {
         <span>Premium</span>
       </div>
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a>
+        <Link to='#'>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">

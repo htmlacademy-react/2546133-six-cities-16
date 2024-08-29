@@ -11,14 +11,14 @@ export const routesAPI = {
 };
 
 export const defaultCustomIcon = new Icon({
-  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
+  iconUrl: '../markup/img/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
 
 
 export const activeCustomIcon = new Icon({
-  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
+  iconUrl: '../markup/img/pin-active.svg',
   iconSize: [27, 39],
   iconAnchor: [13, 39],
 });

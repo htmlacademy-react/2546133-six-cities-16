@@ -47,7 +47,7 @@ export const MapComp = ({crdList,offerId}:MapPropsType) => {
 
   return (
     <div
-      style={{height: '700px'}}
+      style={{height : '700px', marginBottom : '50px'}}
       ref={mapRef}
     >
     </div>

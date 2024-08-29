@@ -17,9 +17,6 @@ export const OfferList = ({offerList}:OfferListPropType) => {
   };
 
 
-  if (!offerList || offerList.length === 0) {
-    return 'No places to stay available';
-  }
   return(
     offerList.map((offer:OfferType) => (
 

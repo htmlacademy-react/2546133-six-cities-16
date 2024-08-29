@@ -1,4 +1,5 @@
 import { Navigation } from './navigation/navigation';
+import { Link } from 'react-router-dom';
 
 export const FavoritesEmpty = () => (
 
@@ -15,10 +16,10 @@ export const FavoritesEmpty = () => (
         </section>
       </div>
     </main>
-    <footer className="footer">
-      <a className="footer__logo-link" href="main.html">
+    <footer className="footer container">
+      <Link to={'/'} className="footer__logo-link">
         <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-      </a>
+      </Link>
     </footer>
   </div>
 );
