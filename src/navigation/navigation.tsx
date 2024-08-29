@@ -27,23 +27,23 @@ export const Navigation = () => {
             {authorizationStatus === 'Authorized' ?
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile">
+                  <Link to='#' className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">
                       <Link to={'/favorites'}> {authorizationStatus === 'Authorized' ? authorizationData?.email : ''}</Link>
                     </span>
                     <span className="header__favorite-count">{favorites.length}</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link">
+                  <Link to='#' className="header__nav-link">
                     <span className="header__signout" onClick={() => {
                       onClickSignOut();
                     }}
                     >Sign out
                     </span>
-                  </a>
+                  </Link>
                 </li>
               </ul> :
               <Link to={'/login'}> Sign in</Link>}

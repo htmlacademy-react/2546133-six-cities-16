@@ -18,7 +18,7 @@ export const ReviewList = () => {
     if (currentOffer) {
       dispatch(fetchComments(currentOffer.id));
     }
-  }, [currentOffer]);
+  }, [currentOffer, dispatch]);
   if(!comments) {
     return (<Spiner/>);
   }

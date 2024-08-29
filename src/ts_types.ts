@@ -19,6 +19,10 @@ export type CrdType = {
   longitude: number;
 }
 
+export type MainEmptyPropsType = {
+  city: string | null;
+}
+
 export type HostType = {
   name: string;
   avatarUrl: string;

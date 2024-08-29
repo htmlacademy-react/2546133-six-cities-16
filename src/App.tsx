@@ -14,19 +14,15 @@ import { fetchFavorites } from './action';
 import { useSelector } from 'react-redux';
 import { StateType } from './reducer';
 
-/*type offersMockPropsType = {
-  offersMock:Array<offerType>;
-}*/
 
 export function App() {
 
   const useAppDispatch = () => useDispatch<DispatchType>();
   const dispatch = useAppDispatch();
-  const authorizationData = useSelector((state:StateType) => state.authorizationData);
   const authorizationStatus = useSelector((state:StateType) => state.authorizationStatus);
   useEffect(() => {
     dispatch(login());
-  }, []);
+  }, [dispatch]);
 
 
   useEffect(() => {
@@ -34,9 +30,8 @@ export function App() {
     if(authorizationStatus === 'Authorized') {
       dispatch(fetchFavorites());
     }
-  }, [authorizationData]);
+  }, [dispatch, authorizationStatus]);
   return(
-    /*<Main offerCount = {2}/>*/
     <BrowserRouter>
       <Routes>
         <Route index element={<Main/>}/>

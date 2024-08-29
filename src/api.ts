@@ -4,7 +4,7 @@ import { getToken } from './token';
 const AXIOS_CONF = {
   baseURL: 'https://16.design.htmlacademy.pro',
   timeout: 5000
-};
+} as const;
 
 
 export const configureAxios = () => {
