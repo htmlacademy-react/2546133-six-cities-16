@@ -11,16 +11,13 @@ export const routesAPI = {
 };
 
 export const defaultCustomIcon = new Icon({
-  iconUrl: '../markup/img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: '../markup/img/pin.svg'
+
 });
 
 
 export const activeCustomIcon = new Icon({
-  iconUrl: '../markup/img/pin-active.svg',
-  iconSize: [27, 39],
-  iconAnchor: [13, 39],
+  iconUrl: '../markup/img/pin-active.svg'
 });
 
 
@@ -76,3 +73,15 @@ export const CITIES:CityType[] = [
     }
   }
 ];
+
+
+export const MAIN_MAP_STYLE = {
+  height: '100%',
+  marginBottom : '50px'
+} as const;
+
+
+export const OFFER_MAP_STYLE = {
+  height: '700px',
+  marginBottom : '50px'
+} as const;
