@@ -6,7 +6,7 @@ import useMap from '../hooks/use-map';
 
 import L from 'leaflet';
 import { StateType } from '../reducer';
-import { defaultCustomIcon, activeCustomIcon } from '../const';
+import { defaultCustomIcon, activeCustomIcon, MAIN_MAP_STYLE, OFFER_MAP_STYLE } from '../const';
 
 export const MapComp = ({crdList,offerId}:MapPropsType) => {
 
@@ -47,7 +47,7 @@ export const MapComp = ({crdList,offerId}:MapPropsType) => {
 
   return (
     <div
-      style={{height : '700px', marginBottom : '50px'}}
+      style={crdList.length > 4 ? MAIN_MAP_STYLE : OFFER_MAP_STYLE}
       ref={mapRef}
     >
     </div>
