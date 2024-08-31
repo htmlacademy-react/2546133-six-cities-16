@@ -94,11 +94,11 @@ export const Offer = ()=> {
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button" onClick={() => {
+                <button className={`offer__bookmark-button button ${currentOffer.isFavorite === true ? 'offer__bookmark-button--active' : ''}`} type="button" onClick={() => {
                   onClickFavorites();
                 }}
                 >
-                  <svg className={`offer__bookmark-icon${currentOffer.isFavorite === true ? '--active' : ''}`} width="31" height="33">
+                  <svg className='offer__bookmark-icon' width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -166,7 +166,6 @@ export const Offer = ()=> {
             </div>
           </div>
           <section className="map">
-            {/*comments */}
             <MapComp crdList={crdNearMap} offerId={currentOfferId}></MapComp>
           </section>
         </section>

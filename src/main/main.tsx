@@ -14,6 +14,7 @@ import { DispatchType } from '../ts_types';
 import { Navigation } from '../navigation/navigation';
 import { Sort } from '../sort';
 import { MainEmpty } from '../main-empty/main-empty';
+
 export const Main = () => {
 
   const useAppDispatch = () => useDispatch<DispatchType>();
@@ -60,8 +61,9 @@ export const Main = () => {
                   <OfferList offerList= {getOfferList(currentOfferList, currentCity, sort)}/>
                 </div>
               </section>
-              <div className="cities__right-section" >
+              <div className="cities__right-section" style={{backgroundImage:'url(../../markup/img/amsterdam.jpg)'}}>
                 <section className="cities__map map">
+
 
                   {crdList.length > 0 && <MapComp crdList={crdList} offerId = {offerId}/>}
 
